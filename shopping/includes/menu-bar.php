@@ -28,11 +28,6 @@ while($row=mysqli_fetch_array($sql))
 			</li>
 			<?php } ?>
 
-			<li class="dropdown yamm">
-				<a href="admin/" style="color:#000"> Admin Login</a>
-			
-			</li>
-		</ul><!-- /.navbar-nav -->
 		<div class="clearfix"></div>				
 	</div>
 </div>

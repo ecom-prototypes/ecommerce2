@@ -59,7 +59,7 @@
                     </span>
                 </div>
                 <div class="media-body">
-                    <p>New Delhi, Delhi</p>
+                    <p>Titilagarh, Odisha</p>
                 </div>
             </li>
 
@@ -71,7 +71,7 @@
                     </span>
                 </div>
                 <div class="media-body">
-                    <p>(011) 000000000000<br>(011) 000000000000</p>
+                    <p>+91 1234567890<br>+91 1234567890</p>
                 </div>
             </li>
 
@@ -83,7 +83,7 @@
                     </span>
                 </div>
                 <div class="media-body">
-                    <span><a href="#">test@test.com</a></span>
+                    <span><a href="#">khusicomputer@test.com</a></span>
                 </div>
             </li>
               
