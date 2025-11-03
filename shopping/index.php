@@ -82,14 +82,11 @@ if(isset($_GET['action']) && $_GET['action']=="add"){
 		<div class="furniture-container homepage-container">
 		<div class="row">
 		
-			<div class="col-xs-12 col-sm-12 col-md-3 sidebar">
+
 				<!-- ================================== TOP NAVIGATION ================================== -->
 	<?php include('includes/side-menu.php');?>
 <!-- ================================== TOP NAVIGATION : END ================================== -->
-			</div><!-- /.sidemenu-holder -->	
-			
-			<div class="col-xs-12 col-sm-12 col-md-9 homebanner-holder">
-				<!-- ========================================== SECTION – HERO ========================================= -->
+<!-- ========================================== SECTION – HERO ========================================= -->
 			
 <div id="hero" class="homepage-slider3">
 	<div id="owl-main" class="owl-carousel owl-inner-nav owl-ui-sm">
@@ -112,7 +109,7 @@ if(isset($_GET['action']) && $_GET['action']=="add"){
 <div class="info-boxes wow fadeInUp">
 	<div class="info-boxes-inner">
 		<div class="row">
-			<div class="col-md-6 col-sm-4 col-lg-4">
+			<div class="col-md-6 col-sm-6 col-lg-6">
 				<div class="info-box">
 					<div class="row">
 						<div class="col-xs-2">
@@ -126,21 +123,9 @@ if(isset($_GET['action']) && $_GET['action']=="add"){
 				</div>
 			</div><!-- .col -->
 
-			<div class="hidden-md col-sm-4 col-lg-4">
-				<div class="info-box">
-					<div class="row">
-						<div class="col-xs-2">
-							<i class="icon fa fa-truck"></i>
-						</div>
-						<div class="col-xs-10">
-							<h4 class="info-box-heading orange">free shipping</h4>
-						</div>
-					</div>
-					<h6 class="text">free ship-on oder over Rs. 600.00</h6>	
-				</div>
-			</div><!-- .col -->
+			
 
-			<div class="col-md-6 col-sm-4 col-lg-4">
+			<div class="col-md-6 col-sm-6 col-lg-6">
 				<div class="info-box">
 					<div class="row">
 						<div class="col-xs-2">
