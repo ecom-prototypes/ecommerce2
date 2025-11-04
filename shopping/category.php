@@ -185,9 +185,7 @@ while($row=mysqli_fetch_array($sql))
 {
     ?>
 
-					<div class="excerpt hidden-sm hidden-md">
-						<?php echo htmlentities($row['categoryName']);?>
-					</div>
+					
 			<?php } ?>
 			
 				</div><!-- /.caption -->

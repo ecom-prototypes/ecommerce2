@@ -114,6 +114,31 @@ header('location:my-wishlist.php');
 	            	<h3 class="section-title">shop by</h3>
 	            	<div class="sidebar-filter">
 		            	<!-- ============================================== SIDEBAR CATEGORY ============================================== -->
+
+<div class="side-menu animate-dropdown outer-bottom-xs">
+    <div class="head"><i class="icon fa fa-align-justify fa-fw"></i>Sub Categories</div>
+    <nav class="yamm megamenu-horizontal" role="navigation">
+        <ul class="nav">
+            <li class="dropdown menu-item">
+                <?php
+                $current_scid = isset($_GET['scid']) ? $_GET['scid'] : ''; // get scid from URL
+
+                $sql = mysqli_query($con, "SELECT id, subcategory FROM subcategory");
+                while ($row = mysqli_fetch_array($sql)) {
+                    // check if current URL id matches this subcategory id
+                    $activeClass = ($current_scid == $row['id']) ? 'bg-info' : '';
+                ?>
+                    <a href="sub-category.php?scid=<?php echo $row['id']; ?>" 
+                       class="dropdown-toggle <?php echo $activeClass; ?>">
+                        <i class="icon fa fa-desktop fa-fw"></i>
+                        <?php echo $row['subcategory']; ?>
+                    </a>
+                <?php } ?>
+            </li>
+        </ul>
+    </nav>
+</div>
+
 <div class="sidebar-widget wow fadeInUp outer-bottom-xs ">
 	<div class="widget-header m-t-20">
 		<h4 class="widget-title">Category</h4>
@@ -163,9 +188,7 @@ while($row=mysqli_fetch_array($sql))
 {
     ?>
 
-					<div class="excerpt hidden-sm hidden-md">
-						<?php echo htmlentities($row['subcategory']);?>
-					</div>
+					
 			<?php } ?>
 			
 				</div><!-- /.caption -->

@@ -110,13 +110,19 @@ if(isset($_GET['action']) && $_GET['action']=="add"){
 	<div class="info-boxes-inner">
 		<div class="row">
 			<div class="col-md-6 col-sm-6 col-lg-6">
-				<div class="info-box">
+				<div class="info-box text-center">
 					<div class="row">
 						<div class="col-xs-2">
+						     
+						</div>
+						<div class="col-xs-1">
 						     <i class="icon fa fa-dollar"></i>
 						</div>
-						<div class="col-xs-10">
+						<div class="col-xs-6">
 							<h4 class="info-box-heading green">money back</h4>
+						</div>
+						<div class="col-xs-2">
+						     
 						</div>
 					</div>	
 					<h6 class="text">30 Day Money Back Guarantee.</h6>
@@ -126,13 +132,19 @@ if(isset($_GET['action']) && $_GET['action']=="add"){
 			
 
 			<div class="col-md-6 col-sm-6 col-lg-6">
-				<div class="info-box">
+				<div class="info-box text-center">
 					<div class="row">
 						<div class="col-xs-2">
+						     
+						</div>
+						<div class="col-xs-1">
 							<i class="icon fa fa-gift"></i>
 						</div>
-						<div class="col-xs-10">
+						<div class="col-xs-6">
 							<h4 class="info-box-heading red">Special Sale</h4>
+						</div>
+						<div class="col-xs-2">
+						     
 						</div>
 					</div>
 					<h6 class="text">All items-sale up to 20% off </h6>	
