@@ -3,6 +3,7 @@ session_start();
 error_reporting(0);
 include('includes/config.php');
 $cid=intval($_GET['scid']);
+$cat_id= intval($_GET['cid']);
 if(isset($_GET['action']) && $_GET['action']=="add"){
 	$id=intval($_GET['id']);
 	if(isset($_SESSION['cart'][$id])){
@@ -114,7 +115,27 @@ header('location:my-wishlist.php');
 	            	<h3 class="section-title">shop by</h3>
 	            	<div class="sidebar-filter">
 		            	<!-- ============================================== SIDEBAR CATEGORY ============================================== -->
+<div class="side-menu animate-dropdown outer-bottom-xs ">
+	<div class="head"><i class="icon fa fa-align-justify fa-fw"></i>Category</div>
+				
+	         <?php 
+			 
+			 $sql=mysqli_query($con,"select id,categoryName  from category where id=$cat_id");
+while($row=mysqli_fetch_array($sql))
+{
+    ?>
+		<nav class="yamm megamenu-horizontal" role="navigation">
+	    	<ul class="nav">
+	            <li class="dropdown menu-item">
+	                <a href="category.php?cid=<?php echo $row['id'];?>"  class="dropdown-toggle">
+	                   <?php echo $row['categoryName'];?>
+	                </a>
+				</li>  
+			</ul>
+		</nav>
+	    <?php } ?>
 
+</div><!-- /.sidebar-widget -->
 <div class="side-menu animate-dropdown outer-bottom-xs">
     <div class="head"><i class="icon fa fa-align-justify fa-fw"></i>Sub Categories</div>
     <nav class="yamm megamenu-horizontal" role="navigation">
@@ -128,9 +149,9 @@ header('location:my-wishlist.php');
                     // check if current URL id matches this subcategory id
                     $activeClass = ($current_scid == $row['id']) ? 'bg-info' : '';
                 ?>
-                    <a href="sub-category.php?scid=<?php echo $row['id']; ?>" 
+                    <a href="sub-category.php?cid=<?php echo $cat_id ?>&scid=<?php echo $row['id']; ?>" 
                        class="dropdown-toggle <?php echo $activeClass; ?>">
-                        <i class="icon fa fa-desktop fa-fw"></i>
+                        
                         <?php echo $row['subcategory']; ?>
                     </a>
                 <?php } ?>
@@ -139,27 +160,7 @@ header('location:my-wishlist.php');
     </nav>
 </div>
 
-<div class="sidebar-widget wow fadeInUp outer-bottom-xs ">
-	<div class="widget-header m-t-20">
-		<h4 class="widget-title">Category</h4>
-	</div>
-	<div class="sidebar-widget-body m-t-10">
-	         <?php $sql=mysqli_query($con,"select id,categoryName  from category");
-while($row=mysqli_fetch_array($sql))
-{
-    ?>
-		<div class="accordion">
-	    	<div class="accordion-group">
-	            <div class="accordion-heading">
-	                <a href="category.php?cid=<?php echo $row['id'];?>"  class="accordion-toggle collapsed">
-	                   <?php echo $row['categoryName'];?>
-	                </a>
-	            </div>  
-	        </div>
-	    </div>
-	    <?php } ?>
-	</div><!-- /.sidebar-widget-body -->
-</div><!-- /.sidebar-widget -->
+
 
 
 
@@ -174,9 +175,7 @@ while($row=mysqli_fetch_array($sql))
 
 	<div id="category" class="category-carousel hidden-xs">
 		<div class="item">	
-			<div class="image">
-				<img src="assets/images/banners/cat-banner-2.jpg" alt="" class="img-responsive">
-			</div>
+			
 			<div class="container-fluid">
 				<div class="caption vertical-top text-left">
 					<div class="big-text">

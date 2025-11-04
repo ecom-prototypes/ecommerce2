@@ -3,6 +3,7 @@ session_start();
 error_reporting(0);
 include('includes/config.php');
 $cid=intval($_GET['cid']);
+$scid = intval($_GET['scid']);
 if(isset($_GET['action']) && $_GET['action']=="add"){
 	$id=intval($_GET['id']);
 	if(isset($_SESSION['cart'][$id])){
@@ -111,54 +112,55 @@ header('location:my-wishlist.php');
 		<div class='row outer-bottom-sm'>
 			<div class='col-md-3 sidebar'>
 	            <!-- ================================== TOP NAVIGATION ================================== -->
-<div class="side-menu animate-dropdown outer-bottom-xs">       
-<div class="side-menu animate-dropdown outer-bottom-xs">
-    <div class="head"><i class="icon fa fa-align-justify fa-fw"></i>Sub Categories</div>        
-    <nav class="yamm megamenu-horizontal" role="navigation">
-  
-        <ul class="nav">
-            <li class="dropdown menu-item">
-              <?php $sql=mysqli_query($con,"select id,subcategory  from subcategory where categoryid='$cid'");
 
-while($row=mysqli_fetch_array($sql))
-{
-    ?>
-                <a href="sub-category.php?scid=<?php echo $row['id'];?>" class="dropdown-toggle"><i class="icon fa fa-desktop fa-fw"></i>
-                <?php echo $row['subcategory'];?></a>
-                <?php }?>
-                        
-</li>
-</ul>
-    </nav>
-</div>
-</div><!-- /.side-menu -->
 <!-- ================================== TOP NAVIGATION : END ================================== -->	            <div class="sidebar-module-container">
 	            	<h3 class="section-title">shop by</h3>
 	            	<div class="sidebar-filter">
 		            	<!-- ============================================== SIDEBAR CATEGORY ============================================== -->
-<div class="sidebar-widget wow fadeInUp outer-bottom-xs ">
-	<div class="widget-header m-t-20">
-		<h4 class="widget-title">Category</h4>
-	</div>
-	<div class="sidebar-widget-body m-t-10">
+<div class="side-menu animate-dropdown outer-bottom-xs">	
+	
+	<div class="head"><i class="icon fa fa-align-justify fa-fw"></i>Category</div>
+	
 	         <?php $sql=mysqli_query($con,"select id,categoryName  from category");
 while($row=mysqli_fetch_array($sql))
 {
     ?>
-		<div class="accordion">
-	    	<div class="accordion-group">
-	            <div class="accordion-heading">
-	                <a href="category.php?cid=<?php echo $row['id'];?>"  class="accordion-toggle collapsed">
+    <nav class="yamm megamenu-horizontal" role="navigation">
+	    	<ul class="nav">
+	            <li class="dropdown menu-item">
+	                <a href="category.php?cid=<?php echo $row['id'];?>"  class="dropdown-toggle collapsed">
 	                   <?php echo $row['categoryName'];?>
 	                </a>
-	            </div>  
-	        </div>
-	    </div>
+  				</li>  
+			</ul>
+</nav>
 	    <?php } ?>
-	</div><!-- /.sidebar-widget-body -->
+	
 </div><!-- /.sidebar-widget -->
 
+<div class="side-menu animate-dropdown outer-bottom-xs d-none">
+    <div class="head"><i class="icon fa fa-align-justify fa-fw"></i>Sub Categories</div>
+    <nav class="yamm megamenu-horizontal" role="navigation">
+        <ul class="nav">
+            <li class="dropdown menu-item">
+                <?php
+                $current_scid = isset($_GET['scid']) ? $_GET['scid'] : ''; // get scid from URL
 
+                $sql = mysqli_query($con, "SELECT id, subcategory FROM subcategory");
+                while ($row = mysqli_fetch_array($sql)) {
+                    // check if current URL id matches this subcategory id
+                    $activeClass = ($current_scid == $row['id']) ? 'bg-info' : '';
+                ?>
+                    <a href="sub-category.php?cid=<?php echo $cat_id ?>&scid=<?php echo $row['id']; ?>" 
+                       class="dropdown-toggle <?php echo $activeClass; ?>">
+                        
+                        <?php echo $row['subcategory']; ?>
+                    </a>
+                <?php } ?>
+            </li>
+        </ul>
+    </nav>
+</div>
 
     
 <!-- ============================================== COLOR: END ============================================== -->
@@ -169,29 +171,7 @@ while($row=mysqli_fetch_array($sql))
 			<div class='col-md-9'>
 					<!-- ========================================== SECTION – HERO ========================================= -->
 
-	<div id="category" class="category-carousel hidden-xs">
-		<div class="item">	
-			<div class="image">
-				<img src="assets/images/banners/cat-banner-1.jpg" alt="" class="img-responsive">
-			</div>
-			<div class="container-fluid">
-				<div class="caption vertical-top text-left">
-					<div class="big-text">
-						<br />
-					</div>
 
-					       <?php $sql=mysqli_query($con,"select categoryName  from category where id='$cid'");
-while($row=mysqli_fetch_array($sql))
-{
-    ?>
-
-					
-			<?php } ?>
-			
-				</div><!-- /.caption -->
-			</div><!-- /.container-fluid -->
-		</div>
-</div>
 
 				<div class="search-result-container">
 					<div id="myTabContent" class="tab-content">
