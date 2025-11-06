@@ -76,7 +76,7 @@ header('location:my-wishlist.php');
 		<link rel="stylesheet" href="assets/css/font-awesome.min.css">
 
         <!-- Fonts --> 
-		<link href='http://fonts.googleapis.com/css?family=Roboto:300,400,500,700' rel='stylesheet' type='text/css'>
+		<link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700' rel='stylesheet' type='text/css'>
 		<link rel="shortcut icon" href="assets/images/favicon.ico">
 	</head>
     <body class="cnt-home">

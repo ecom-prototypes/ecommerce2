@@ -124,7 +124,7 @@ echo "<script>alert('Shipping Address has been updated');</script>";
 		<link rel="stylesheet" href="assets/css/font-awesome.min.css">
 
         <!-- Fonts --> 
-		<link href='http://fonts.googleapis.com/css?family=Roboto:300,400,500,700' rel='stylesheet' type='text/css'>
+		<link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700' rel='stylesheet' type='text/css'>
 		
 		<!-- Favicon -->
 		<link rel="shortcut icon" href="assets/images/favicon.ico">
