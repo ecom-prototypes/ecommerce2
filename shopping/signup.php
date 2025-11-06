@@ -1,6 +1,6 @@
 <?php session_start();
 include_once('includes/config.php');
-error_reporting(0);
+
 if(isset($_POST['submit']))
 {
 $name=$_POST['fullname'];

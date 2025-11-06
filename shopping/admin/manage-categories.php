@@ -1,6 +1,6 @@
 <?php session_start();
 include_once('includes/config.php');
-error_reporting(0);
+
 if(strlen( $_SESSION["aid"])==0)
 {   
 header('location:logout.php');

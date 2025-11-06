@@ -1,6 +1,6 @@
 <?php
 session_start();
-error_reporting(0);
+
 include('includes/config.php');
 $find="%{$_POST['product']}%";
 if(isset($_GET['action']) && $_GET['action']=="add"){

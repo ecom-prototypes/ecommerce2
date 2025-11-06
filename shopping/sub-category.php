@@ -1,6 +1,6 @@
 <?php
 session_start();
-error_reporting(0);
+
 include('includes/config.php');
 $scid=intval($_GET['scid']);
 $cid= intval($_GET['cid']);
