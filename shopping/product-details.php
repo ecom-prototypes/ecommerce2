@@ -21,7 +21,7 @@ if(isset($_GET['action']) && $_GET['action']=="add"){
 }
 $pid=intval($_GET['pid']);
 if(isset($_GET['pid']) && $_GET['action']=="wishlist" ){
-	if(strlen($_SESSION['login'])==0)
+	if(isset($_SESSION['login']))
     {   
 header('location:login.php');
 }

@@ -1,6 +1,6 @@
 <?php session_start();
 include_once('includes/config.php');
-if(strlen($_SESSION['id'])==0)
+if(isset($_SESSION['id']))
 {   header('location:logout.php');
 }else{
 if($_SESSION['address']==0):
