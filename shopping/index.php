@@ -161,74 +161,62 @@ if(isset($_GET['action']) && $_GET['action']=="add"){
 
 		<!-- ============================================== SCROLL TABS ============================================== -->
 		<div  >
-			<div class="more-info-tab clearfix">
-			   <h3 class="new-product-title pull-left">All Products</h3>
-		<!-- 		<ul class="nav nav-tabs nav-tab-line pull-right" id="new-products-1">
-					<li class="active"><a href="#all" data-toggle="tab">All</a></li>
-					<li><a href="#books" data-toggle="tab">Books</a></li>
-					<li><a href="#furniture" data-toggle="tab">Furniture</a></li>
-				</ul> -->
-			</div>
+			<div>
+  <div class="more-info-tab clearfix">
+    <h3 class="new-product-title pull-left">All Products</h3>
+  </div>
 
-			<div class="tab-content outer-top-xs">
-				<div class="tab-pane in active" id="all">			
-					<div class="product-slider">
-						<div class="owl-carousel home-owl-carousel custom-carousel owl-theme" >
-<?php
-$ret=mysqli_query($con,"select * from products");
-while ($row=mysqli_fetch_array($ret)) 
-{
-	# code...
+  <div class="tab-content outer-top-xs">
+    <div class="tab-pane in active" id="all">
+      <div class="product-slider">
+        <div class="owl-carousel home-owl-carousel custom-carousel owl-theme">
+          <?php
+          $ret = mysqli_query($con, "select * from products");
+          while ($row = mysqli_fetch_array($ret)) {
+          ?>
+            <div class="item">
+              <div class="products">
+                <div class="product text-center"> <!-- text-center ensures centering -->
+                  <div class="product-image mb-3">
+                    <a href="product-details.php?pid=<?php echo htmlentities($row['id']); ?>">
+                      <img
+                        src="admin/productimages/<?php echo htmlentities($row['id']); ?>/<?php echo htmlentities($row['productImage1']); ?>"
+                        alt="<?php echo htmlentities($row['productName']); ?>"
+                        class="img-fluid mx-auto d-block product-img"
+                      >
+                    </a>
+                  </div>
 
+                  <div class="product-info">
+                    <h3 class="name mb-2">
+                      <a href="product-details.php?pid=<?php echo htmlentities($row['id']); ?>">
+                        <?php echo htmlentities($row['productName']); ?>
+                      </a>
+                    </h3>
 
-?>
+                    <div class="product-price mb-2">
+                      <span class="price">Rs.<?php echo htmlentities($row['productPrice']); ?></span>
+                      <span class="price-before-discount text-muted" style="text-decoration: line-through;">
+                        Rs.<?php echo htmlentities($row['productPriceBeforeDiscount']); ?>
+                      </span>
+                    </div>
 
-						    	
-		<div class="item">
-			<div class="products">
-				
-	<div class="product">		
-		<div class="product-image">
-			<div class="image">
-				<a href="product-details.php?pid=<?php echo htmlentities($row['id']);?>">
-				<img  src="admin/productimages/<?php echo htmlentities($row['id']);?>/<?php echo htmlentities($row['productImage1']);?>" data-echo="admin/productimages/<?php echo htmlentities($row['id']);?>/<?php echo htmlentities($row['productImage1']);?>"  width="180" height="300" alt=""></a>
-			</div><!-- /.image -->			
+                    <?php if ($row['productAvailability'] == 'In Stock') { ?>
+                      <a href="index.php?page=product&action=add&id=<?php echo $row['id']; ?>" class="btn btn-sm btn-info mt-2">Add to Cart</a>
+                    <?php } else { ?>
+                      <div class="text-danger mt-2">Out of Stock</div>
+                    <?php } ?>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <?php } ?>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-			                        		   
-		</div><!-- /.product-image -->
-			
-		
-		<div class="product-info text-left">
-			<h3 class="name"><a href="product-details.php?pid=<?php echo htmlentities($row['id']);?>"><?php echo htmlentities($row['productName']);?></a></h3>
-			<div class="rating rateit-small"></div>
-			<div class="description"></div>
-
-			<div class="product-price">	
-				<span class="price">
-					Rs.<?php echo htmlentities($row['productPrice']);?>			</span>
-										     <span class="price-before-discount">Rs.<?php echo htmlentities($row['productPriceBeforeDiscount']);?>	</span>
-									
-			</div><!-- /.product-price -->
-			
-		</div><!-- /.product-info -->
-		<?php if($row['productAvailability']=='In Stock'){?>
-					<div class="action"><a href="index.php?page=product&action=add&id=<?php echo $row['id']; ?>" class="lnk btn btn-info">Add to Cart</a></div>
-				<?php } else {?>
-						<div class="action" style="color:red">Out of Stock</div>
-					<?php } ?>
-			</div><!-- /.product -->
-      
-			</div><!-- /.products -->
-		</div><!-- /.item -->
-	<?php } ?>
-
-			</div><!-- /.home-owl-carousel -->
-					</div><!-- /.product-slider -->
-				</div>
-
-
-
-			</div>
 		</div>
 		    
 
