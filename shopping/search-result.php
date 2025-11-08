@@ -125,7 +125,7 @@ header('location:my-wishlist.php');
           if ($num > 0) {
             while ($row = mysqli_fetch_array($ret)) {
           ?>
-              <div class="item col-sm-6 col-md-4 wow fadeInUp">
+              <div class="item col-xs-6 col-sm-4 col-md-3 wow fadeInUp">
                 <div class="products">
                   <div class="product text-center">
                     
