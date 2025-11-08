@@ -33,7 +33,7 @@ if(!empty($_SESSION['cart'])){
 if(isset($_POST['ordersubmit'])) 
 {
 	
-if(isset($_SESSION['login']))
+if(strlen($_SESSION['login'])==0)
     {   
 header('location:login.php');
 }

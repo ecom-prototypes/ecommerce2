@@ -2,7 +2,7 @@
 session_start();
 
 include('includes/config.php');
-if(isset($_SESSION['login']))
+if(strlen($_SESSION['login'])==0)
     {   
 header('location:login.php');
 }

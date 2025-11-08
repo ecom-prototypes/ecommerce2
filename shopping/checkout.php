@@ -1,7 +1,7 @@
 <?php session_start();
 include_once('includes/config.php');
 
-if(isset($_SESSION['id']))
+if(strlen($_SESSION['id'])==0)
 {   header('location:logout.php');
 }else{
 // Code for Product deletion from  cart  
