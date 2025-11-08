@@ -84,7 +84,7 @@ echo "<script>alert('Shipping Address has been updated');</script>";
 <header class="header-style-1">
 
 	<!-- ============================================== TOP MENU ============================================== -->
-<?php include('includes/top-header.php');?>
+
 <!-- ============================================== TOP MENU : END ============================================== -->
 <?php include('includes/main-header.php');?>
 	<!-- ============================================== NAVBAR ============================================== -->

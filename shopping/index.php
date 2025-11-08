@@ -34,7 +34,7 @@ if(isset($_GET['action']) && $_GET['action']=="add"){
 	    <meta name="keywords" content="MediaCenter, Template, eCommerce">
 	    <meta name="robots" content="all">
 
-	    <title>Shopping Portal Home Page</title>
+	    <title>Khusi Computer Home Page</title>
 
 	    <!-- Bootstrap Core CSS -->
 	    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
@@ -71,7 +71,7 @@ if(isset($_GET['action']) && $_GET['action']=="add"){
 	
 		<!-- ============================================== HEADER ============================================== -->
 <header class="header-style-1">
-<?php include('includes/top-header.php');?>
+
 <?php include('includes/main-header.php');?>
 <?php include('includes/menu-bar.php');?>
 </header>

@@ -31,7 +31,7 @@ exit();
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Shopping Portal | Admin login</title>
+	<title>Khusi Computer | Admin login</title>
 	<link type="text/css" href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
 	<link type="text/css" href="bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
 	<link type="text/css" href="css/theme.css" rel="stylesheet">
@@ -48,7 +48,7 @@ exit();
 				</a>
 
 			  	<a class="brand" href="../index.php">
-			  		Shopping Portal | Admin
+			  		Khusi Computer | Admin
 			  	</a>
 
 				<div class="nav-collapse collapse navbar-inverse-collapse">
@@ -110,7 +110,7 @@ exit();
 		<div class="container">
 			 
 
-			<b class="copyright"> Shopping Portal </b>
+			<b class="copyright"> Khusi Computer </b>
 		</div>
 	</div>
 	<script src="scripts/jquery-1.9.1.min.js" type="text/javascript"></script>

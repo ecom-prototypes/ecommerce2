@@ -47,7 +47,7 @@ exit();
 	    <meta name="keywords" content="MediaCenter, Template, eCommerce">
 	    <meta name="robots" content="all">
 
-	    <title>Shopping Portal | Forgot Password</title>
+	    <title>Khusi Computer | Forgot Password</title>
 
 	    <!-- Bootstrap Core CSS -->
 	    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
@@ -103,7 +103,7 @@ return true;
 <header class="header-style-1">
 
 	<!-- ============================================== TOP MENU ============================================== -->
-<?php include('includes/top-header.php');?>
+
 <!-- ============================================== TOP MENU : END ============================================== -->
 <?php include('includes/main-header.php');?>
 	<!-- ============================================== NAVBAR ============================================== -->

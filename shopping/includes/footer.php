@@ -9,7 +9,7 @@
         <div class="logo">
             <a href="index.php">
                 
-<h3>Shopping Portal</h3>
+<h3>Khusi Computer</h3>
             </a>
         </div><!-- /.logo -->
     

@@ -65,7 +65,7 @@ popUpWin = open(URLStr,'popUpWin', 'toolbar=no,location=no,directories=no,status
 	
 		<!-- ============================================== HEADER ============================================== -->
 <header class="header-style-1">
-<?php include('includes/top-header.php');?>
+
 <?php include('includes/main-header.php');?>
 <?php include('includes/menu-bar.php');?>
 </header>

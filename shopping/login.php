@@ -66,7 +66,7 @@ exit();
 	    <meta name="keywords" content="MediaCenter, Template, eCommerce">
 	    <meta name="robots" content="all">
 
-	    <title>Shopping Portal | Signi-in | Signup</title>
+	    <title>Khusi Computer | Signi-in | Signup</title>
 
 	    <!-- Bootstrap Core CSS -->
 	    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
@@ -140,7 +140,7 @@ error:function (){}
 <header class="header-style-1">
 
 	<!-- ============================================== TOP MENU ============================================== -->
-<?php include('includes/top-header.php');?>
+
 <!-- ============================================== TOP MENU : END ============================================== -->
 <?php include('includes/main-header.php');?>
 	<!-- ============================================== NAVBAR ============================================== -->

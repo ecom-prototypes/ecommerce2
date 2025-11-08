@@ -1,4 +1,4 @@
-How to run the Online Shopping Portal using PHP and MySQL
+How to run the Online Khusi Computer using PHP and MySQL
 
 1. Download the  zip file
 
