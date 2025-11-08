@@ -25,7 +25,7 @@
 						</a>
 					</div>		
 				</div>
-				<div class="col-xs-5 col-sm-12 col-md-6 top-search-holder">
+				<div class="col-xs-5 col-sm-5 col-md-6 top-search-holder">
 				<div class="search-area">
 					<form name="search" method="post" action="search-result.php">
 						<div class="control-group">
