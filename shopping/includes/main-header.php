@@ -13,19 +13,19 @@
 	}
 ?>
 	<div class="main-header">
-		<div class="container">
+		<div class="container mb-1">
 			<div class="row">
-				<div class="col-xs-12 col-sm-12 col-md-3 logo-holder">
+				<div class="col-xs-3 col-sm-3 col-md-3 logo-holder">
 					<!-- ============================================================= LOGO ============================================================= -->
 					<div class="logo">
 						<a href="index.php">
 							
-							<h2>Khusi Computer</h2>
+							<h2>KC</h2>
 
 						</a>
 					</div>		
 				</div>
-				<div class="col-xs-12 col-sm-12 col-md-6 top-search-holder">
+				<div class="col-xs-5 col-sm-12 col-md-6 top-search-holder">
 				<div class="search-area">
 					<form name="search" method="post" action="search-result.php">
 						<div class="control-group">

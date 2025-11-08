@@ -1041,9 +1041,6 @@ a {
 .main-header {
   padding: 10px 0px 20px 0px;
 }
-.main-header .logo-holder {
-  margin-top: 10px;
-}
 .main-header .top-search-holder .contact-row {
   line-height: 20px;
   color: #9b9b9b;
@@ -1064,7 +1061,7 @@ a {
   -webkit-border-radius: 0px;
   -moz-border-radius: 0px;
   border-radius: 0px;
-  margin: 8px 0 0;
+  margin: 4px 0 0;
 }
 .main-header .top-search-holder .search-area .search-field {
   border: medium none;
@@ -4108,7 +4105,6 @@ a {
   }
   .main-header .logo-holder {
     text-align: center;
-    margin-bottom: 20px;
   }
   .main-header .top-search-holder .contact-row {
     margin-bottom: 20px;
@@ -4273,7 +4269,6 @@ a {
   }
   .main-header .logo-holder {
     text-align: center;
-    margin-bottom: 20px;
   }
   .main-header .contact-row {
     text-align: center;
@@ -5195,4 +5190,7 @@ a {
 }
 .body-content .sign-in-page .register-form .form-group {
   margin-bottom: 25px;
+}
+.mb-1 {
+  margin-bottom: 10px !important;
 }
