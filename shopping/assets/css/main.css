@@ -1300,9 +1300,6 @@ a {
 .header-style-1 .header-nav .navbar-default .navbar-collapse .navbar-nav > li .menu-label.hot-menu:before {
   border-color: #ff7878 rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) rgba(0, 0, 0, 0);
 }
-.header-style-2 {
-  /*margin-bottom:10px;*/
-}
 .header-style-2 .header-nav {
   background: rgba(0, 0, 0, 0) !important;
 }
@@ -4743,10 +4740,7 @@ a {
   font-size: 18px;
   color: #666666;
 }
-.shopping-cart .shopping-cart-table table tbody tr .romove-item a:hover,
-.shopping-cart .shopping-cart-table table tbody tr .romove-item a:focus {
-  color: #ff000 !important;
-}
+
 .shopping-cart .shopping-cart-table table tbody tr .cart-image .entry-thumbnail {
   display: block;
   text-align: center;
