@@ -104,7 +104,6 @@ header('location:my-wishlist.php');
 
 </header>
 <!-- ============================================== HEADER : END ============================================== -->
-</div><!-- /.breadcrumb -->
 <div class="body-content outer-top-xs">
 	<div class='container'>
 		
@@ -114,7 +113,7 @@ header('location:my-wishlist.php');
 				Search Results:
 			</div>
 		</div>
-		<div class="search-result-container">
+<div class="search-result-container">
   <div id="myTabContent" class="tab-content">
     <div class="tab-pane active" id="grid-container">
       <div class="category-product inner-top-vs">
@@ -149,8 +148,8 @@ header('location:my-wishlist.php');
                       </h3>
 
                       <div class="product-price">
-                        <span class="price">Rs. <?php echo htmlentities($row['productPrice']); ?></span>
-                        <span class="price-before-discount">Rs. <?php echo htmlentities($row['productPriceBeforeDiscount']); ?></span>
+                        <span class="price">₹ <?php echo htmlentities($row['productPrice']); ?></span>
+                        <span class="price-before-discount">₹ <?php echo htmlentities($row['productPriceBeforeDiscount']); ?></span>
                       </div>
                     </div>
 

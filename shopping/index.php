@@ -195,9 +195,9 @@ if(isset($_GET['action']) && $_GET['action']=="add"){
                     </h3>
 
                     <div class="product-price mb-2">
-                      <span class="price">Rs.<?php echo htmlentities($row['productPrice']); ?></span>
+                      <span class="price">₹<?php echo htmlentities($row['productPrice']); ?></span>
                       <span class="price-before-discount text-muted" style="text-decoration: line-through;">
-                        Rs.<?php echo htmlentities($row['productPriceBeforeDiscount']); ?>
+                        ₹<?php echo htmlentities($row['productPriceBeforeDiscount']); ?>
                       </span>
                     </div>
 

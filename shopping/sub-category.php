@@ -189,58 +189,49 @@ if($num>0)
 {
 while ($row=mysqli_fetch_array($ret)) 
 {?>							
-		<div class="col-sm-6 col-md-4 wow fadeInUp">
-			<div class="products">				
-	<div class="product">		
-		<div class="product-image">
-			<div class="image">
-				<a href="product-details.php?pid=<?php echo htmlentities($row['id']);?>"><img  src="assets/images/blank.gif" data-echo="admin/productimages/<?php echo htmlentities($row['id']);?>/<?php echo htmlentities($row['productImage1']);?>" alt="" width="200" height="300"></a>
-			</div><!-- /.image -->			                      		   
-		</div><!-- /.product-image -->
-			
-		
-		<div class="product-info text-left">
-			<h3 class="name"><a href="product-details.php?pid=<?php echo htmlentities($row['id']);?>"><?php echo htmlentities($row['productName']);?></a></h3>
-			<div class="rating rateit-small"></div>
-			<div class="description"></div>
+		<div class="item col-xs-6 col-sm-4 col-md-3 wow fadeInUp">
+                <div class="products">
+                  <div class="product text-center">
+                    
+                    <!-- Product Image -->
+                    <div class="product-image">
+                      <a href="product-details.php?pid=<?php echo htmlentities($row['id']); ?>">
+                        <img
+                          src="admin/productimages/<?php echo htmlentities($row['id']); ?>/<?php echo htmlentities($row['productImage1']); ?>"
+                          alt="<?php echo htmlentities($row['productName']); ?>"
+                          class="img-fluid product-img"
+                        >
+                      </a>
+                    </div>
 
-			<div class="product-price">	
-				<span class="price">
-					Rs. <?php echo htmlentities($row['productPrice']);?>			</span>
-										     <span class="price-before-discount">Rs. <?php echo htmlentities($row['productPriceBeforeDiscount']);?></span>
-									
-			</div><!-- /.product-price -->
-			
-		</div><!-- /.product-info -->
-					<div class="cart clearfix animate-effect">
-				<div class="action">
-					<ul class="list-unstyled">
-						<li class="add-cart-button btn-group">
-						<?php if($row['productAvailability']=='In Stock'){?>
-										<button class="btn btn-primary icon" data-toggle="dropdown" type="button">
-								<i class="fa fa-shopping-cart"></i>													
-							</button>
-							<a href="category.php?page=product&action=add&id=<?php echo $row['id']; ?>">
-							<button class="btn btn-primary" type="button">Add to cart</button></a>
-								<?php } else {?>
-							<div class="action" style="color:red">Out of Stock</div>
-					<?php } ?>
-													
-						</li>
-	                   
-		                <li class="lnk wishlist">
-							<a class="add-to-cart" href="category.php?pid=<?php echo htmlentities($row['id'])?>&&action=wishlist" title="Wishlist">
-								 <i class="icon fa fa-heart"></i>
-							</a>
-						</li>
+                    <!-- Product Info -->
+                    <div class="product-info">
+                      <h3 class="name">
+                        <a href="product-details.php?pid=<?php echo htmlentities($row['id']); ?>">
+                          <?php echo htmlentities($row['productName']); ?>
+                        </a>
+                      </h3>
 
-						
-					</ul>
-				</div><!-- /.action -->
-			</div><!-- /.cart -->
-			</div>
-			</div>
-		</div>
+                      <div class="product-price">
+                        <p class="price">₹ <?php echo htmlentities($row['productPrice']); ?></p>
+                        <p class="price-before-discount">₹ <?php echo htmlentities($row['productPriceBeforeDiscount']); ?></p>
+                      </div>
+                    </div>
+
+                    <!-- Add to Cart / Out of Stock -->
+                    <div class="cart mt-2">
+                      <?php if ($row['productAvailability'] == 'In Stock') { ?>
+                        <a href="category.php?page=product&action=add&id=<?php echo $row['id']; ?>" class="btn btn-sm btn-info mt-auto">
+                          <i class="fa fa-shopping-cart"></i> Add to Cart
+                        </a>
+                      <?php } else { ?>
+                        <div class="text-danger mt-2">Out of Stock</div>
+                      <?php } ?>
+                    </div>
+
+                  </div><!-- /.product -->
+                </div><!-- /.products -->
+              </div><!-- /.col -->
 	  <?php } } else {?>
 	
 		<div class="col-sm-6 col-md-4 wow fadeInUp"> <h3>No Product Found</h3>
