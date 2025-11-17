@@ -148,20 +148,16 @@ header('location:my-wishlist.php');
                       </h3>
 
                       <div class="product-price">
-                        <span class="price">₹ <?php echo htmlentities($row['productPrice']); ?></span>
-                        <span class="price-before-discount">₹ <?php echo htmlentities($row['productPriceBeforeDiscount']); ?></span>
+                        <span class="price">₹<?php echo htmlentities($row['productPrice']); ?></span>
+                        <span class="price-before-discount">₹<?php echo htmlentities($row['productPriceBeforeDiscount']); ?></span>
                       </div>
                     </div>
 
                     <!-- Add to Cart / Out of Stock -->
                     <div class="cart mt-2">
-                      <?php if ($row['productAvailability'] == 'In Stock') { ?>
-                        <a href="category.php?page=product&action=add&id=<?php echo $row['id']; ?>" class="btn btn-sm btn-info mt-auto">
-                          <i class="fa fa-shopping-cart"></i> Add to Cart
-                        </a>
-                      <?php } else { ?>
+                      <?php if ($row['productAvailability'] != 'In Stock') { ?>
                         <div class="text-danger mt-2">Out of Stock</div>
-                      <?php } ?>
+                      <?php }  ?>
                     </div>
 
                   </div><!-- /.product -->

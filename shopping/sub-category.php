@@ -189,7 +189,7 @@ if($num>0)
 {
 while ($row=mysqli_fetch_array($ret)) 
 {?>							
-		<div class="item col-xs-6 col-sm-4 col-md-3 wow fadeInUp">
+		<div class="item col-xs-6 col-sm-4 col-md-4 wow fadeInUp">
                 <div class="products">
                   <div class="product text-center">
                     
@@ -213,20 +213,16 @@ while ($row=mysqli_fetch_array($ret))
                       </h3>
 
                       <div class="product-price">
-                        <p class="price">₹ <?php echo htmlentities($row['productPrice']); ?></p>
-                        <p class="price-before-discount">₹ <?php echo htmlentities($row['productPriceBeforeDiscount']); ?></p>
+                        <span class="price">₹<?php echo htmlentities($row['productPrice']); ?></span>
+                        <span class="price-before-discount">₹<?php echo htmlentities($row['productPriceBeforeDiscount']); ?></span>
                       </div>
                     </div>
 
                     <!-- Add to Cart / Out of Stock -->
                     <div class="cart mt-2">
-                      <?php if ($row['productAvailability'] == 'In Stock') { ?>
-                        <a href="category.php?page=product&action=add&id=<?php echo $row['id']; ?>" class="btn btn-sm btn-info mt-auto">
-                          <i class="fa fa-shopping-cart"></i> Add to Cart
-                        </a>
-                      <?php } else { ?>
+                      <?php if ($row['productAvailability'] != 'In Stock') { ?>
                         <div class="text-danger mt-2">Out of Stock</div>
-                      <?php } ?>
+                      <?php }  ?>
                     </div>
 
                   </div><!-- /.product -->

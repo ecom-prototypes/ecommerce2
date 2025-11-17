@@ -201,11 +201,9 @@ if(isset($_GET['action']) && $_GET['action']=="add"){
                       </span>
                     </div>
 
-                    <?php if ($row['productAvailability'] == 'In Stock') { ?>
-                      <a href="index.php?page=product&action=add&id=<?php echo $row['id']; ?>" class="btn btn-sm btn-info mt-2">Add to Cart</a>
-                    <?php } else { ?>
-                      <div class="text-danger mt-2">Out of Stock</div>
-                    <?php } ?>
+                    <?php if ($row['productAvailability'] != 'In Stock') { ?>
+                        <div class="text-danger mt-2">Out of Stock</div>
+                      <?php }  ?>
                   </div>
                 </div>
               </div>
