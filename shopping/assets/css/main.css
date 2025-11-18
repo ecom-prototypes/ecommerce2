@@ -7238,3 +7238,47 @@ a {
 .lh-4 {
   line-height: 2.2 !important;
 }
+
+/* Main product image box */
+.image-box {
+    width: 100%;
+    height: 380px;             /* Same size for all main images */
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.image-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;         /* Keeps images same size without stretching */
+    display: block;
+}
+
+/* Thumbnails */
+.thumb-box {
+    width: 90px;
+    height: 90px;
+    overflow: hidden;
+    border-radius: 6px;
+    margin: auto;
+}
+
+.thumb-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .image-box {
+        height: 260px;        /* Smaller image on mobile */
+    }
+    .thumb-box {
+        width: 70px;
+        height: 70px;
+    }
+}
+.float-right {
+  float: right;
+}

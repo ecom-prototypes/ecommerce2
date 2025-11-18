@@ -1,4 +1,4 @@
-<div class="header-nav animate-dropdown">
+<div class="header-nav animate-dropdown d-none d-md-none d-lg-block">
     <div class="container">
         <div class="yamm navbar navbar-default" role="navigation">
             <div class="navbar-header">

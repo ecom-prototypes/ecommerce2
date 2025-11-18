@@ -15,7 +15,7 @@
 	<div class="main-header">
 		<div class="container mb-1">
 			<div class="row">
-				<div class="col-xs-3 col-sm-3 col-md-3 logo-holder">
+				<div class="col-xs-1 col-sm-3 col-md-3 logo-holder">
 					<!-- ============================================================= LOGO ============================================================= -->
 					<div class="logo">
 						<a href="index.php">
@@ -25,19 +25,25 @@
 						</a>
 					</div>		
 				</div>
-				<div class="col-xs-5 col-sm-5 col-md-6 top-search-holder">
-				<div class="search-area">
-					<form name="search" method="post" action="search-result.php">
-						<div class="control-group">
+				<div class="col-xs-5 col-sm-6 col-md-6 top-search-holder">
+					<div class="search-area">
+						<form name="search" method="post" action="search-result.php">
+							<div class="control-group">
 
-							<input class="search-field" placeholder="Search here..." name="product" required="required" />
+								<input class="search-field" placeholder="Search here..." name="product" required="required" />
 
-							<button class="search-button" type="submit" name="search"></button>    
+								<button class="search-button" type="submit" name="search"></button>    
 
-						</div>
-					</form>
+							</div>
+						</form>
+					</div>
+					
 				</div>
-			</div>
+				<div class="col-xs-1 col-sm-3 col-md-3">
+				<button class="btn btn-outline-primary float-right d-block d-md-block d-lg-none " type="button" data-bs-toggle="offcanvas" data-bs-target="#rightSidebar">
+					<i class="bi bi-bars"></i>
+				</button>
+				</div>
 		</div>
 	</div>
 
