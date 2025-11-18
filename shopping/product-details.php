@@ -20,19 +20,7 @@ if(isset($_GET['action']) && $_GET['action']=="add"){
 	}
 }
 $pid=intval($_GET['pid']);
-if(isset($_GET['pid']) && $_GET['action']=="wishlist" ){
-	if(strlen($_SESSION['login'])==0)
-    {   
-header('location:login.php');
-}
-else
-{
-mysqli_query($con,"insert into wishlist(userId,productId) values('".$_SESSION['id']."','$pid')");
-echo "<script>alert('Product aaded in wishlist');</script>";
-header('location:my-wishlist.php');
 
-}
-}
 if(isset($_POST['submit']))
 {
 	$qty=$_POST['quality'];
@@ -173,7 +161,7 @@ while ($rws=mysqli_fetch_array($ret)) {
 									Rs. <?php echo htmlentities($rws['productPrice']);?>.00
 								</span>
 									
-							    <span class="price-before-discount">Rs.<?php echo htmlentities($row['productPriceBeforeDiscount']);?></span>					
+							    <span class="price-before-discount">Rs.<?php echo htmlentities($rws['productPriceBeforeDiscount']);?></span>					
 							
 							</div><!-- /.product-price -->
 							
@@ -183,16 +171,11 @@ while ($rws=mysqli_fetch_array($ret)) {
 							<div class="action">
 								
 								<div class="add-cart-button btn-group">
-									<button class="btn btn-primary icon" data-toggle="dropdown" type="button">
-								<?php if($row['productAvailability']=='In Stock'){?>
-										<button class="btn btn-primary icon" data-toggle="dropdown" type="button">
-								<i class="fa fa-shopping-cart"></i>													
-							</button>
-							<a href="category.php?page=product&action=add&id=<?php echo $row['id']; ?>">
-							<button class="btn btn-primary" type="button">Add to cart</button></a>
-								<?php } else {?>
-							<div class="action" style="color:red">Out of Stock</div>
-					<?php } ?>
+									
+								<?php if($rws['productAvailability']!='In Stock'){?>
+																					
+									<div class="action" style="color:red">Out of Stock</div>
+								<?php } ?>
 															
 								</div>
 								
@@ -293,23 +276,63 @@ while($row=mysqli_fetch_array($ret))
 					<div class='col-sm-6 col-md-7 product-info-block'>
 						<div class="product-info">
 							<h1 class="name"><?php echo htmlentities($row['productName']);?></h1>
-<?php $rt=mysqli_query($con,"select * from productreviews where productId='$pid'");
-$num=mysqli_num_rows($rt);
-{
-?>		
-							<div class="rating-reviews m-t-20">
-								<div class="row">
-									<div class="col-sm-3">
-										<div class="rating rateit-small"></div>
-									</div>
-									<div class="col-sm-8">
-										<div class="reviews">
-											<a href="#" class="lnk">(<?php echo htmlentities($num);?> Reviews)</a>
-										</div>
-									</div>
-								</div><!-- /.row -->		
-							</div><!-- /.rating-reviews -->
-<?php } ?>
+<?php 
+$rt = mysqli_query($con,"SELECT * FROM productreviews WHERE productId='$pid'");
+$num = mysqli_num_rows($rt);
+
+$overall_rating = 0;
+
+if ($num > 0) {
+
+    $total_quality = 0;
+    $total_price   = 0;
+    $total_value   = 0;
+
+    while ($rowa = mysqli_fetch_assoc($rt)) {
+        $total_quality += (int)$rowa['quality'];
+        $total_price   += (int)$rowa['price'];
+        $total_value   += (int)$rowa['value'];
+    }
+
+    // Average of all 3 rating columns
+    $avg_quality = $total_quality / $num;
+    $avg_price   = $total_price / $num;
+    $avg_value   = $total_value / $num;
+
+    // Final product rating out of 5
+    $overall_rating = ($avg_quality + $avg_price + $avg_value) / 3;
+    $overall_rating = round($overall_rating, 1); // e.g. 4.3
+}
+?>
+
+<div class="rating-reviews m-t-20">
+    <div class="row align-items-center">
+    <div class="col-sm-3">
+        <?php 
+        for ($i = 1; $i <= 5; $i++) {
+            if ($overall_rating >= $i) {
+                echo '<span style="color:gold;font-size:20px;">★</span>';
+            } else if ($overall_rating >= ($i - 0.5)) {
+                echo '<span style="color:gold;font-size:20px;">☆</span>';
+            } else {
+                echo '<span style="color:#ccc;font-size:20px;">★</span>';
+            }
+        }
+        ?>
+    </div>
+
+    <div class="col-sm-8 lh-4">
+        <div class="reviews">
+            <a href="#" class="lnk">
+                (<?php echo htmlentities($num);?> Reviews)  
+                - Rating: <?php echo $overall_rating; ?>/5
+            </a>
+        </div>
+    </div>
+</div>
+
+</div>
+
 							<div class="stock-container info-container m-t-10">
 								<div class="row">
 									<div class="col-sm-3">
@@ -381,15 +404,7 @@ $num=mysqli_num_rows($rt);
 
 
 
-									<div class="col-sm-6">
-										<div class="favorite-button m-t-10">
-											<a class="btn btn-primary" data-toggle="tooltip" data-placement="right" title="Wishlist" href="product-details.php?pid=<?php echo htmlentities($row['id'])?>&&action=wishlist">
-											    <i class="fa fa-heart"></i>
-											</a>
-											
-											</a>
-										</div>
-									</div>
+									
 
 								</div><!-- /.row -->
 							</div><!-- /.price-container -->
@@ -402,26 +417,11 @@ $num=mysqli_num_rows($rt);
 							<div class="quantity-container info-container">
 								<div class="row">
 									
-									<div class="col-sm-2">
-										<span class="label">Qty :</span>
-									</div>
 									
-									<div class="col-sm-2">
-										<div class="cart-quantity">
-											<div class="quant-input">
-								                <div class="arrows">
-								                  <div class="arrow plus gradient"><span class="ir"><i class="icon fa fa-sort-asc"></i></span></div>
-								                  <div class="arrow minus gradient"><span class="ir"><i class="icon fa fa-sort-desc"></i></span></div>
-								                </div>
-								                <input type="text" value="1">
-							              </div>
-							            </div>
-									</div>
 
 									<div class="col-sm-7">
-<?php if($row['productAvailability']=='In Stock'){?>
-										<a href="product-details.php?page=product&action=add&id=<?php echo $row['id']; ?>" class="btn btn-primary"><i class="fa fa-shopping-cart inner-right-vs"></i> ADD TO CART</a>
-													<?php } else {?>
+<?php if($row['productAvailability']!='In Stock'){?>
+										
 							<div class="action" style="color:red">Out of Stock</div>
 					<?php } ?>
 									</div>
@@ -430,19 +430,7 @@ $num=mysqli_num_rows($rt);
 								</div><!-- /.row -->
 							</div><!-- /.quantity-container -->
 
-					<!-- 		<div class="product-social-link m-t-20 text-right">
-								<span class="social-label">Share :</span>
-								<div class="social-icons">
-						            <ul class="list-inline">
-						                <li><a class="fa fa-facebook" href="http://facebook.com/transvelo"></a></li>
-						                <li><a class="fa fa-twitter" href="#"></a></li>
-						                <li><a class="fa fa-linkedin" href="#"></a></li>
-						                <li><a class="fa fa-rss" href="#"></a></li>
-						                <li><a class="fa fa-pinterest" href="#"></a></li>
-						            </ul>
-						        </div>
-							</div>
- -->
+				
 							
 
 							
@@ -632,9 +620,7 @@ while($rw=mysqli_fetch_array($qry))
 						<li class="add-cart-button btn-group">
 							<button class="btn btn-primary icon" data-toggle="dropdown" type="button">
 								<i class="fa fa-shopping-cart"></i>													
-							</button>
-						<a href="product-details.php?page=product&action=add&id=<?php echo $rw['id']; ?>" class="lnk btn btn-primary">Add to cart</a>
-													
+							</button>													
 						</li>
 	                   
 		              
