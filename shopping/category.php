@@ -83,90 +83,25 @@ if(isset($_GET['action']) && $_GET['action']=="add"){
     <body class="cnt-home">
 	
 <header class="header-style-1">
-
+<div class="contain">
 	<!-- ============================================== TOP MENU ============================================== -->
-
-<!-- ============================================== TOP MENU : END ============================================== -->
 <?php include('includes/main-header.php');?>
 	<!-- ============================================== NAVBAR ============================================== -->
 <?php include('includes/menu-bar.php');?>
+</div>
+</div>
+<!-- ============================================== TOP MENU : END ============================================== -->
+
 <!-- ============================================== NAVBAR : END ============================================== -->
 
 </header>
 <!-- ============================================== HEADER : END ============================================== -->
-</div><!-- /.breadcrumb -->
-<div class="offcanvas offcanvas-end" tabindex="-1" id="rightSidebar">
-    <div class="offcanvas-header">
-        <h5 class="offcanvas-title">Filters</h5>
-        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"></button>
-    </div>
-    <div class="offcanvas-body">
 
-        <!-- ⭐ YOUR SIDEBAR CONTENT STARTS HERE ⭐ -->
 
-<div class='col-md-3 sidebar'>
-    <div class="sidebar-module-container">
-        <h3 class="section-title">shop by</h3>
-
-        <div class="sidebar-filter">
-
-            <div class="side-menu animate-dropdown outer-bottom-xs">
-                <div class="head"><i class="icon fa fa-align-justify fa-fw"></i>Category</div>
-
-                <?php 
-                if (isset($_GET['scid'])){
-                    $sql=mysqli_query($con,"select id,categoryName  from category where id=$cid");
-                } else {
-                    $sql=mysqli_query($con,"select id,categoryName  from category");
-                }
-                while($row=mysqli_fetch_array($sql)) {
-                ?>
-                <nav class="yamm megamenu-horizontal" role="navigation">
-                    <ul class="nav">
-                        <li class="dropdown menu-item">
-                            <a href="sub-category.php?cid=<?php echo $row['id'];?>&scid=0" class="dropdown-toggle collapsed">
-                                <?php echo $row['categoryName'];?>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-                <?php } ?>
-            </div>
-
-<?php if(isset($_GET['scid'])) { ?>
-<div class="side-menu animate-dropdown outer-bottom-xs">
-    <div class="head"><i class="icon fa fa-align-justify fa-fw"></i>Sub Categories</div>
-    <nav class="yamm megamenu-horizontal" role="navigation">
-        <ul class="nav">
-            <li class="dropdown menu-item">
-                <?php
-                $current_scid = isset($_GET['scid']) ? $_GET['scid'] : ''; 
-                $sql = mysqli_query($con, "SELECT id, subcategory FROM subcategory where categoryid=$cid");
-                while ($row = mysqli_fetch_array($sql)) {
-                    $activeClass = ($current_scid == $row['id']) ? 'bg-info' : '';
-                ?>
-                    <a href="sub-category.php?cid=<?php echo $cid ?>&scid=<?php echo $row['id']; ?>" 
-                       class="dropdown-toggle <?php echo $activeClass; ?>">
-                        <?php echo $row['subcategory']; ?>
-                    </a>
-                <?php } ?>
-            </li>
-        </ul>
-    </nav>
-</div>
-<?php } ?>
-
-        </div>
-    </div>
-</div>
-
-        <!-- ⭐ YOUR SIDEBAR CONTENT ENDS HERE ⭐ -->
-
-    </div>
-</div>
 
 <div class="body-content outer-top-xs">
 	<div class='container'>
+		
 		<div class='row outer-bottom-sm'>
 			<div class='col-md-3 sidebar d-none d-md-none d-lg-block'>
 	            <!-- ================================== TOP NAVIGATION ================================== -->
@@ -300,7 +235,6 @@ while ($row=mysqli_fetch_array($ret))
 <?php include('includes/footer.php');?>
 	<script src="assets/js/jquery-1.11.1.min.js"></script>
 	
-	<script src="assets/js/bootstrap.min.js"></script>
 	
 	<script src="assets/js/bootstrap-hover-dropdown.min.js"></script>
 	<script src="assets/js/owl.carousel.min.js"></script>
@@ -314,24 +248,7 @@ while ($row=mysqli_fetch_array($ret))
     <script src="assets/js/wow.min.js"></script>
 	<script src="assets/js/scripts.js"></script>
 
-	<!-- For demo purposes – can be removed on production -->
-	
-	<script src="switchstylesheet/switchstylesheet.js"></script>
-	
-	<script>
-		$(document).ready(function(){ 
-			$(".changecolor").switchstylesheet( { seperator:"color"} );
-			$('.show-theme-options').click(function(){
-				$(this).parent().toggleClass('open');
-				return false;
-			});
-		});
 
-		$(window).bind("load", function() {
-		   $('.show-theme-options').delay(2000).trigger('click');
-		});
-	</script>
-	<!-- For demo purposes – can be removed on production : End -->
 
 	
 

@@ -4266,7 +4266,7 @@ a {
     display: block;
   }
   .main-header .logo-holder {
-    text-align: center;
+    text-align: left;
   }
   .main-header .contact-row {
     text-align: center;
@@ -7281,4 +7281,57 @@ a {
 }
 .float-right {
   float: right;
+}
+
+.d-flex {
+  display: flex !important;
+}
+.align-items-center {
+  align-items: center !important;
+}
+.justify-content-start {
+  justify-content: flex-start !important;
+}
+
+.justify-content-end {
+  justify-content: flex-end !important;
+}
+
+.justify-content-center {
+  justify-content: center !important;
+}
+
+.contain .na {
+  position: absolute;
+  width: 250px;
+  top: 0;
+  bottom: 0;
+  padding: 1em;
+  border-right: 1px solid #e0e0e0;
+  background-color: white;
+  color: black;
+  z-index: 5;
+}
+.contain .na.right {
+  right: -300px;
+  transition: 0.2s ease;
+}
+.contain .na.right.active {
+  right: 0;
+}
+.contain .na.left {
+  left: -300px;
+  transition: 0.2s ease;
+}
+.contain .na.left.active {
+  left: 0;
+}
+.btn {
+  margin-left: 350px;
+  padding: 10px 25px;
+  background-color: #333;
+  color: #FFF;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
 }
