@@ -47,11 +47,14 @@
 		</div>
 	</div>
 	<div class="na left sidebar" id="left">
-		<div class="side-menu">
+		
+			<i class="close-sidebar bi bi-x-lg"></i>
+		
+		<div class="side-menu animate-dropdown outer-bottom-xs ">
 		<div class="head">Category</div>
 	
 	         <?php 
-			 if (isset($_GET['scid'])){
+			 if (isset($_GET['cid'])){
 				$sql=mysqli_query($con,"select id,categoryName  from category where id=$cid");
 			 } else {
 
@@ -63,7 +66,7 @@ while($row=mysqli_fetch_array($sql))
     <nav class="yamm megamenu-horizontal" role="navigation">
 	    	<ul class="nav">
 	            <li class="dropdown menu-item">
-	                <a href="sub-category.php?cid=<?php echo $row['id'];?>&scid=0"  class="dropdown-toggle collapsed">
+	                <a href="sub-category.php?cid=<?php echo $row['id'];?>"  class="dropdown-toggle collapsed">
 	                   <?php echo $row['categoryName'];?>
 	                </a>
   				</li>  
@@ -71,6 +74,31 @@ while($row=mysqli_fetch_array($sql))
 </nav>
 	    <?php } ?>
 </div>
+<?php if(isset($_GET['cid'])){ ?>
+	<div class="side-menu animate-dropdown outer-bottom-xs">
+    <div class="head"><i class="icon fa fa-align-justify fa-fw"></i>Sub Categories</div>
+    <nav class="yamm megamenu-horizontal" role="navigation">
+        <ul class="nav">
+            <li class="dropdown menu-item">
+                <?php
+                $current_scid = isset($_GET['scid']) ? $_GET['scid'] : ''; // get scid from URL
+
+                $sql = mysqli_query($con, "SELECT id, subcategory FROM subcategory where categoryid=$cid");
+                while ($row = mysqli_fetch_array($sql)) {
+                    // check if current URL id matches this subcategory id
+                    $activeClass = ($current_scid == $row['id']) ? 'bg-info' : '';
+                ?>
+                    <a href="sub-category.php?cid=<?php echo $cid; ?>&scid=<?php echo $row['id']; ?>" 
+                       class="dropdown-toggle <?php echo $activeClass; ?>">
+                        
+                        <?php echo $row['subcategory']; ?>
+                    </a>
+                <?php } ?>
+            </li>
+        </ul>
+    </nav>
+</div>
+<?php } ?>
 	</div>
 
 

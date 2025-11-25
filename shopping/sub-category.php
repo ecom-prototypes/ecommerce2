@@ -183,8 +183,8 @@ while($row=mysqli_fetch_array($sql))
 							<div class="category-product  inner-top-vs">
 								<div class="row">									
 			<?php
-if(isset($_GET['cid'])){
-$ret=mysqli_query($con,"select * from products where category='$cid'");
+if(isset($_GET['scid'])){
+$ret=mysqli_query($con,"select * from products where subCategory='$scid'");
 $num=mysqli_num_rows($ret);
 if($num>0)
 {
@@ -234,8 +234,8 @@ while ($row=mysqli_fetch_array($ret))
 		<div class="col-sm-6 col-md-4 wow fadeInUp"> <h3>No Product Found</h3>
 		</div>
 		
-<?php } } elseif(isset($_GET['scid'])) { 
-	$ret=mysqli_query($con,"select * from products where subCategory='$scid'");
+<?php } } elseif(isset($_GET['cid'])) { 
+	$ret=mysqli_query($con,"select * from products where category='$cid'");
 $num=mysqli_num_rows($ret);
 if($num>0)
 {

@@ -271,6 +271,13 @@ $(document).ready(function () {
     $('[data-component~="sidebar"]').on('click', function () {
         $('#' + $(this).data('target')).toggleClass('active');
     });
+    
+    $('.close-sidebar').on('click', function () {
+        if ($('.na').hasClass('active')) {
+            $('.na').removeClass('active');
+        }
+    });
+
 
 });
 

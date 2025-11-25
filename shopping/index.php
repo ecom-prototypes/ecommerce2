@@ -71,10 +71,13 @@ if(isset($_GET['action']) && $_GET['action']=="add"){
 		
 	
 		<!-- ============================================== HEADER ============================================== -->
+<?php $cid=0;
+			$scid=0; ?>
 <header class="header-style-1">
-
+	<div class="contain">
 <?php include('includes/main-header.php');?>
 <?php include('includes/menu-bar.php');?>
+</div>
 </header>
 
 <!-- ============================================== HEADER : END ============================================== -->
@@ -86,6 +89,7 @@ if(isset($_GET['action']) && $_GET['action']=="add"){
 
 				<!-- ================================== TOP NAVIGATION ================================== -->
 	<?php include('includes/side-menu.php');?>
+	
 <!-- ================================== TOP NAVIGATION : END ================================== -->
 <!-- ========================================== SECTION – HERO ========================================= -->
 			
