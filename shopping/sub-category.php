@@ -2,8 +2,8 @@
 session_start();
 
 include('includes/config.php');
-$scid=intval($_GET['scid']);
-$cid= intval($_GET['cid']);
+$scid=isset($_GET['scid']) ? intval($_GET['scid']) : 0;
+$cid= isset($_GET['cid']) ?intval($_GET['cid']) : 0;
 if(isset($_GET['action']) && $_GET['action']=="add"){
 	$id=intval($_GET['id']);
 	if(isset($_SESSION['cart'][$id])){
@@ -94,7 +94,7 @@ header('location:my-wishlist.php');
     <body class="cnt-home">
 	
 <header class="header-style-1">
-
+<div class="contain">
 	<!-- ============================================== TOP MENU ============================================== -->
 
 <!-- ============================================== TOP MENU : END ============================================== -->
@@ -102,14 +102,14 @@ header('location:my-wishlist.php');
 	<!-- ============================================== NAVBAR ============================================== -->
 <?php include('includes/menu-bar.php');?>
 <!-- ============================================== NAVBAR : END ============================================== -->
-
+</div>
 </header>
 <!-- ============================================== HEADER : END ============================================== -->
 </div><!-- /.breadcrumb -->
 <div class="body-content outer-top-xs">
 	<div class='container'>
 		<div class='row outer-bottom-sm'>
-			<div class='col-md-3 sidebar'>
+			<div class='col-md-3 sidebar d-none d-md-none d-lg-block'>
 	            <!-- ================================== TOP NAVIGATION ================================== -->
 <!-- ================================== TOP NAVIGATION : END ================================== -->	            <div class="sidebar-module-container">
 	            	<h3 class="section-title">shop by</h3>
@@ -129,7 +129,7 @@ while($row=mysqli_fetch_array($sql))
 		<nav class="yamm megamenu-horizontal" role="navigation">
 	    	<ul class="nav">
 	            <li class="dropdown menu-item">
-	                <a href="sub-category.php?cid=<?php echo $row['id'];?>&scid=<?php echo $scid;?>"  class="dropdown-toggle">
+	                <a href="sub-category.php?cid=<?php echo $row['id'];?>"  class="dropdown-toggle">
 	                   <?php echo $row['categoryName'];?>
 	                </a>
 				</li>  
@@ -151,7 +151,7 @@ while($row=mysqli_fetch_array($sql))
                     // check if current URL id matches this subcategory id
                     $activeClass = ($current_scid == $row['id']) ? 'bg-info' : '';
                 ?>
-                    <a href="sub-category.php?cid=<?php echo $cid ?>&scid=<?php echo $row['id']; ?>" 
+                    <a href="sub-category.php?cid=<?php echo $cid; ?>&scid=<?php echo $row['id']; ?>" 
                        class="dropdown-toggle <?php echo $activeClass; ?>">
                         
                         <?php echo $row['subcategory']; ?>
@@ -183,7 +183,8 @@ while($row=mysqli_fetch_array($sql))
 							<div class="category-product  inner-top-vs">
 								<div class="row">									
 			<?php
-$ret=mysqli_query($con,"select * from products where subCategory='$scid'");
+if(isset($_GET['cid'])){
+$ret=mysqli_query($con,"select * from products where category='$cid'");
 $num=mysqli_num_rows($ret);
 if($num>0)
 {
@@ -233,7 +234,57 @@ while ($row=mysqli_fetch_array($ret))
 		<div class="col-sm-6 col-md-4 wow fadeInUp"> <h3>No Product Found</h3>
 		</div>
 		
-<?php } ?>	
+<?php } } elseif(isset($_GET['scid'])) { 
+	$ret=mysqli_query($con,"select * from products where subCategory='$scid'");
+$num=mysqli_num_rows($ret);
+if($num>0)
+{
+while ($row=mysqli_fetch_array($ret)) 
+{?>							
+		<div class="item col-xs-6 col-sm-4 col-md-4 wow fadeInUp">
+                <div class="products">
+                  <div class="product text-center">
+                    
+                    <!-- Product Image -->
+                    <div class="product-image">
+                      <a href="product-details.php?pid=<?php echo htmlentities($row['id']); ?>">
+                        <img
+                          src="admin/productimages/<?php echo htmlentities($row['id']); ?>/<?php echo htmlentities($row['productImage1']); ?>"
+                          alt="<?php echo htmlentities($row['productName']); ?>"
+                          class="img-fluid product-img"
+                        >
+                      </a>
+                    </div>
+
+                    <!-- Product Info -->
+                    <div class="product-info">
+                      <h3 class="name">
+                        <a href="product-details.php?pid=<?php echo htmlentities($row['id']); ?>">
+                          <?php echo htmlentities($row['productName']); ?>
+                        </a>
+                      </h3>
+
+                      <div class="product-price">
+                        <span class="price">₹<?php echo htmlentities($row['productPrice']); ?></span>
+                        <span class="price-before-discount">₹<?php echo htmlentities($row['productPriceBeforeDiscount']); ?></span>
+                      </div>
+                    </div>
+
+                    <!-- Add to Cart / Out of Stock -->
+                    <div class="cart mt-2">
+                      <?php if ($row['productAvailability'] != 'In Stock') { ?>
+                        <div class="text-danger mt-2">Out of Stock</div>
+                      <?php }  ?>
+                    </div>
+
+                  </div><!-- /.product -->
+                </div><!-- /.products -->
+              </div><!-- /.col -->
+	  <?php } } else {?>
+	
+		<div class="col-sm-6 col-md-4 wow fadeInUp"> <h3>No Product Found</h3>
+		</div>
+		<?php } } ?>	
 		
 	
 		

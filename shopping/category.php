@@ -89,7 +89,7 @@ if(isset($_GET['action']) && $_GET['action']=="add"){
 	<!-- ============================================== NAVBAR ============================================== -->
 <?php include('includes/menu-bar.php');?>
 </div>
-</div>
+
 <!-- ============================================== TOP MENU : END ============================================== -->
 
 <!-- ============================================== NAVBAR : END ============================================== -->
@@ -128,7 +128,7 @@ while($row=mysqli_fetch_array($sql))
     <nav class="yamm megamenu-horizontal" role="navigation">
 	    	<ul class="nav">
 	            <li class="dropdown menu-item">
-	                <a href="sub-category.php?cid=<?php echo $row['id'];?>&scid=0"  class="dropdown-toggle collapsed">
+	                <a href="sub-category.php?cid=<?php echo $row['id'];?>"  class="dropdown-toggle collapsed">
 	                   <?php echo $row['categoryName'];?>
 	                </a>
   				</li>  

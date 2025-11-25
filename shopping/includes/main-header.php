@@ -46,7 +46,32 @@
 				</div>
 		</div>
 	</div>
-	<div class="na left" id="left">left sidebar</div>
+	<div class="na left sidebar" id="left">
+		<div class="side-menu">
+		<div class="head">Category</div>
+	
+	         <?php 
+			 if (isset($_GET['scid'])){
+				$sql=mysqli_query($con,"select id,categoryName  from category where id=$cid");
+			 } else {
+
+				$sql=mysqli_query($con,"select id,categoryName  from category");
+			 }
+while($row=mysqli_fetch_array($sql))
+{
+    ?>
+    <nav class="yamm megamenu-horizontal" role="navigation">
+	    	<ul class="nav">
+	            <li class="dropdown menu-item">
+	                <a href="sub-category.php?cid=<?php echo $row['id'];?>&scid=0"  class="dropdown-toggle collapsed">
+	                   <?php echo $row['categoryName'];?>
+	                </a>
+  				</li>  
+			</ul>
+</nav>
+	    <?php } ?>
+</div>
+	</div>
 
 
 			
