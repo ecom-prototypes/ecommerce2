@@ -7241,32 +7241,30 @@ a {
 
 /* Main product image box */
 .image-box {
-    width: 100%;
-    height: 380px;             /* Same size for all main images */
+    width: 100%;            /* Same size for all main images */
     overflow: hidden;
     border-radius: 8px;
 }
 
 .image-box img {
-    width: 100%;
-    height: 100%;
+    width: 50%;
+    margin: auto;
     object-fit: cover;         /* Keeps images same size without stretching */
     display: block;
 }
 
 /* Thumbnails */
 .thumb-box {
-    width: 90px;
-    height: 90px;
+    width: 100%;            /* Same size for all main images */
     overflow: hidden;
-    border-radius: 6px;
-    margin: auto;
+    border-radius: 8px;
 }
 
 .thumb-box img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+    width: 50%;
+    margin: auto;
+    object-fit: cover;         /* Keeps images same size without stretching */
+    display: block;
 }
 
 /* Mobile Responsive */

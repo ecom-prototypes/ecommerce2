@@ -367,12 +367,7 @@ $(document).ready(function(){
         return false;
     });
 
-    $('.single-product-gallery .horizontal-thumb').click(function(){
-        var $this = $(this), owl = $($this.data('target')), slideTo = $this.data('slide');
-        owl.trigger('owl.goTo', slideTo);
-        $this.addClass('active').parent().siblings().find('.active').removeClass('active');
-        return false;
-    });
+    
 });
 
 

@@ -65,12 +65,13 @@ if(isset($_POST['submit']))
 
         <!-- Fonts --> 
 		<link href='http://fonts.googleapis.com/css?family=Roboto:300,400,500,700' rel='stylesheet' type='text/css'>
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
 		<link rel="shortcut icon" href="assets/images/favicon.ico">
 	</head>
     <body class="cnt-home">
 	
 <header class="header-style-1">
-
+<div class="contain">
 	<!-- ============================================== TOP MENU ============================================== -->
 <?php include('includes/top-header.php');?>
 <!-- ============================================== TOP MENU : END ============================================== -->
@@ -78,7 +79,7 @@ if(isset($_POST['submit']))
 	<!-- ============================================== NAVBAR ============================================== -->
 <?php include('includes/menu-bar.php');?>
 <!-- ============================================== NAVBAR : END ============================================== -->
-
+</div>
 </header>
 
 <!-- ============================================== HEADER : END ============================================== -->
@@ -199,102 +200,100 @@ while($row=mysqli_fetch_array($ret))
 			<div class="col-xs-12 col-sm-6 col-md-5 gallery-holder">
     			<div class="product-item-holder size-big single-product-gallery small-gallery">
 
-    <div id="owl-single-product">
+    				<div id="owl-single-product">
 
         <!-- Slide 1 -->
-        <div class="single-product-gallery-item" id="slide1">
-            <a data-lightbox="image-1" 
-               data-title="<?php echo htmlentities($row['productName']);?>"
-               href="admin/productimages/<?php echo $row['id']; ?>/<?php echo $row['productImage1']; ?>">
-                <div class="image-box">
-                    <img alt=""
-                         src="assets/images/blank.gif"
-                         data-echo="admin/productimages/<?php echo $row['id']; ?>/<?php echo $row['productImage1']; ?>">
-                </div>
-            </a>
-        </div>
+        				<div class="single-product-gallery-item" id="slide1">
+            				<a data-lightbox="image-1" data-title="<?php echo htmlentities($row['productName']);?>" href="admin/productimages/<?php echo $row['id']; ?>/<?php echo $row['productImage1']; ?>">
+                				<div class="image-box">
+									<img alt=""
+										src="assets/images/blank.gif"
+										data-echo="admin/productimages/<?php echo $row['id']; ?>/<?php echo $row['productImage1']; ?>">
+								</div>
+							</a>
+						</div>
 
         <!-- Slide 2 -->
-        <div class="single-product-gallery-item" id="slide2">
-            <a data-lightbox="image-1"
-               href="admin/productimages/<?php echo $row['id']; ?>/<?php echo $row['productImage2']; ?>">
-                <div class="image-box">
-                    <img alt=""
-                         src="assets/images/blank.gif"
-                         data-echo="admin/productimages/<?php echo $row['id']; ?>/<?php echo $row['productImage2']; ?>">
-                </div>
-            </a>
-        </div>
+						<div class="single-product-gallery-item" id="slide2">
+							<a data-lightbox="image-1"
+							href="admin/productimages/<?php echo $row['id']; ?>/<?php echo $row['productImage2']; ?>">
+								<div class="image-box">
+									<img alt=""
+										src="assets/images/blank.gif"
+										data-echo="admin/productimages/<?php echo $row['id']; ?>/<?php echo $row['productImage2']; ?>">
+								</div>
+							</a>
+						</div>
 
         <!-- Slide 3 -->
-        <div class="single-product-gallery-item" id="slide3">
-            <a data-lightbox="image-1" 
-               href="admin/productimages/<?php echo $row['id']; ?>/<?php echo $row['productImage3']; ?>">
-                <div class="image-box">
-                    <img alt=""
-                         src="assets/images/blank.gif"
-                         data-echo="admin/productimages/<?php echo $row['id']; ?>/<?php echo $row['productImage3']; ?>">
-                </div>
-            </a>
-        </div>
+						<div class="single-product-gallery-item" id="slide3">
+							<a data-lightbox="image-1" 
+							href="admin/productimages/<?php echo $row['id']; ?>/<?php echo $row['productImage3']; ?>">
+								<div class="image-box">
+									<img alt=""
+										src="assets/images/blank.gif"
+										data-echo="admin/productimages/<?php echo $row['id']; ?>/<?php echo $row['productImage3']; ?>">
+								</div>
+							</a>
+						</div>
 
-    </div>
+    				</div>
 
 
     <!-- Thumbnails -->
-    <div class="single-product-gallery-thumbs gallery-thumbs">
+					<div class="single-product-gallery-thumbs gallery-thumbs">
 
-        <div id="owl-single-product-thumbnails">
+						<div id="owl-single-product-thumbnails">
 
-            <!-- Thumb 1 -->
-            <div class="item">
-                <a class="horizontal-thumb active"
-                   data-target="#owl-single-product"
-                   data-slide="1">
-                    <div class="thumb-box">
-                        <img alt=""
-                             src="assets/images/blank.gif"
-                             data-echo="admin/productimages/<?php echo $row['id']; ?>/<?php echo $row['productImage1']; ?>">
-                    </div>
-                </a>
-            </div>
+							<!-- Thumb 1 -->
+							<div class="item">
+								<a class="horizontal-thumb active"
+								data-target="#owl-single-product"
+								data-slide="1">
+									<div class="thumb-box">
+										<img alt=""
+											src="assets/images/blank.gif"
+											data-echo="admin/productimages/<?php echo $row['id']; ?>/<?php echo $row['productImage1']; ?>">
+									</div>
+								</a>
+							</div>
 
-            <!-- Thumb 2 -->
-            <div class="item">
-                <a class="horizontal-thumb" data-slide="2">
-                    <div class="thumb-box">
-                        <img alt=""
-                             src="assets/images/blank.gif"
-                             data-echo="admin/productimages/<?php echo $row['id']; ?>/<?php echo $row['productImage2']; ?>">
-                    </div>
-                </a>
-            </div>
+							<!-- Thumb 2 -->
+							<div class="item">
+								<a class="horizontal-thumb" data-slide="2">
+									<div class="thumb-box">
+										<img alt=""
+											src="assets/images/blank.gif"
+											data-echo="admin/productimages/<?php echo $row['id']; ?>/<?php echo $row['productImage2']; ?>">
+									</div>
+								</a>
+							</div>
 
-            <!-- Thumb 3 -->
-            <div class="item">
-                <a class="horizontal-thumb" data-slide="3">
-                    <div class="thumb-box">
-                        <img alt=""
-                             src="assets/images/blank.gif"
-                             data-echo="admin/productimages/<?php echo $row['id']; ?>/<?php echo $row['productImage3']; ?>">
-                    </div>
-                </a>
-            </div>
+							<!-- Thumb 3 -->
+							<div class="item">
+								<a class="horizontal-thumb" data-slide="3">
+									<div class="thumb-box">
+										<img alt=""
+											src="assets/images/blank.gif"
+											data-echo="admin/productimages/<?php echo $row['id']; ?>/<?php echo $row['productImage3']; ?>">
+									</div>
+								</a>
+							</div>
 
-        </div>
+						</div>
 
-    </div>
+					</div>
 
-</div>
+				</div>
 
 			</div>     			
 
 
 
 
-					<div class='col-sm-6 col-md-7 product-info-block'>
-						<div class="product-info">
-							<h1 class="name"><?php echo htmlentities($row['productName']);?></h1>
+			<div class='col-sm-6 col-md-7 product-info-block'>
+				<div class="product-info">
+					<h1 class="name"><?php echo htmlentities($row['productName']);?></h1>
 <?php 
 $rt = mysqli_query($con,"SELECT * FROM productreviews WHERE productId='$pid'");
 $num = mysqli_num_rows($rt);
