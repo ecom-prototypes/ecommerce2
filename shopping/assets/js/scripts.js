@@ -368,6 +368,7 @@ $(document).ready(function(){
     });
 
     
+    
 });
 
 
@@ -420,3 +421,7 @@ $('#transitionType li a').click(function () {
 
 
 })(jQuery);
+
+function changeImage(imgSrc) {
+        document.getElementById("mainImage").src = imgSrc;
+}
