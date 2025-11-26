@@ -16,6 +16,35 @@ if(isset($_GET['del']))
                   $_SESSION['delmsg']="Product deleted !!";
 		  }
 
+// ---------- PAGINATION SETTINGS ----------
+$limit = isset($_GET['limit']) ? intval($_GET['limit']) : 10; // items per page
+$page  = isset($_GET['page']) ? intval($_GET['page']) : 1;   // current page
+$search = isset($_GET['search']) ? mysqli_real_escape_string($con,$_GET['search']) : "";
+
+$offset = ($page - 1) * $limit;
+
+// Count total products
+$countQuery = "SELECT COUNT(*) as total FROM products 
+               JOIN category ON category.id=products.category 
+               JOIN subcategory ON subcategory.id=products.subCategory
+               WHERE products.productName LIKE '%$search%'";
+
+$countResult = mysqli_query($con,$countQuery);
+$totalData = mysqli_fetch_assoc($countResult)['total'];
+
+$totalPages = ceil($totalData / $limit);
+
+// Fetch products with LIMIT + OFFSET + SEARCH
+$query = mysqli_query($con,"
+    SELECT products.*,category.categoryName,subcategory.subcategory 
+    FROM products 
+    JOIN category ON category.id=products.category 
+    JOIN subcategory ON subcategory.id=products.subCategory
+    WHERE products.productName LIKE '%$search%'
+    ORDER BY products.id DESC
+    LIMIT $limit OFFSET $offset
+");
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -32,72 +61,108 @@ if(isset($_GET['del']))
 <body>
 <?php include('include/header.php');?>
 
-	<div class="wrapper">
-		<div class="container">
-			<div class="row">
-<?php include('include/sidebar.php');?>				
-			<div class="span9">
-					<div class="content">
+<div class="wrapper">
+<div class="container">
+<div class="row">
+<?php include('include/sidebar.php');?>
 
-	<div class="module">
-							<div class="module-head">
-								<h3>Manage Products</h3>
-							</div>
-							<div class="module-body table">
-	<?php if(isset($_GET['del']))
-{?>
-									<div class="alert alert-error">
-										<button type="button" class="close" data-dismiss="alert">×</button>
-									<strong>Oh snap!</strong> 	<?php echo htmlentities($_SESSION['delmsg']);?><?php echo htmlentities($_SESSION['delmsg']="");?>
-									</div>
+<div class="span9">
+<div class="content">
+
+<div class="module">
+<div class="module-head">
+	<h3>Manage Products</h3>
+</div>
+<div class="module-body table">
+
+<?php if(isset($_GET['del'])){ ?>
+	<div class="alert alert-error">
+		<button type="button" class="close" data-dismiss="alert">×</button>
+		<strong>Deleted!</strong> <?php echo htmlentities($_SESSION['delmsg']); ?> 
+		<?php echo htmlentities($_SESSION['delmsg']=""); ?>
+	</div>
 <?php } ?>
 
-									<br />
+<!-- SEARCH + LIMIT FORM -->
+<form method="GET" class="form-inline mb-2" style="margin-bottom:15px;">
+	<input type="text" name="search" class="input-medium" placeholder="Search Product"
+		value="<?php echo $search; ?>">
 
-							
-								<table cellpadding="0" cellspacing="0" border="0" class="datatable-1 table table-bordered table-striped	 display" width="100%">
-									<thead>
-										<tr>
-											<th>#</th>
-											<th>Product Name</th>
-											<th>Category </th>
-											<th>Subcategory</th>
-											<th>Company Name</th>
-											<th>Product Creation Date</th>
-											<th>Action</th>
-										</tr>
-									</thead>
-									<tbody>
+	<select name="limit" class="input-small">
+		<option value="5"  <?php if($limit==5) echo "selected";?>>5</option>
+		<option value="10" <?php if($limit==10) echo "selected";?>>10</option>
+		<option value="25" <?php if($limit==25) echo "selected";?>>25</option>
+		<option value="50" <?php if($limit==50) echo "selected";?>>50</option>
+	</select>
 
-<?php $query=mysqli_query($con,"select products.*,category.categoryName,subcategory.subcategory from products join category on category.id=products.category join subcategory on subcategory.id=products.subCategory");
-$cnt=1;
-while($row=mysqli_fetch_array($query))
-{
-?>									
-										<tr>
-											<td><?php echo htmlentities($cnt);?></td>
-											<td><?php echo htmlentities($row['productName']);?></td>
-											<td><?php echo htmlentities($row['categoryName']);?></td>
-											<td> <?php echo htmlentities($row['subcategory']);?></td>
-											<td><?php echo htmlentities($row['productCompany']);?></td>
-											<td><?php echo htmlentities($row['postingDate']);?></td>
-											<td>
-											<a href="edit-products.php?id=<?php echo $row['id']?>" ><i class="icon-edit"></i></a>
-											<a href="manage-products.php?id=<?php echo $row['id']?>&del=delete" onClick="return confirm('Are you sure you want to delete?')"><i class="icon-remove-sign"></i></a></td>
-										</tr>
-										<?php $cnt=$cnt+1; } ?>
-										
-								</table>
-							</div>
-						</div>						
+	<button type="submit" class="btn btn-primary">Apply</button>
+</form>
 
-						
-						
-					</div><!--/.content-->
-				</div><!--/.span9-->
-			</div>
-		</div><!--/.container-->
-	</div><!--/.wrapper-->
+<table class="table table-bordered table-striped">
+<thead>
+<tr>
+	<th>#</th>
+	<th>Product Name</th>
+	<th>Category</th>
+	<th>Subcategory</th>
+	<th>Company</th>
+	<th>Created</th>
+	<th>Action</th>
+</tr>
+</thead>
+<tbody>
+
+<?php 
+$cnt = $offset + 1;
+while($row = mysqli_fetch_array($query)){ ?>
+<tr>
+	<td><?php echo $cnt++; ?></td>
+	<td><?php echo htmlentities($row['productName']); ?></td>
+	<td><?php echo htmlentities($row['categoryName']); ?></td>
+	<td><?php echo htmlentities($row['subcategory']); ?></td>
+	<td><?php echo htmlentities($row['productCompany']); ?></td>
+	<td><?php echo htmlentities($row['postingDate']); ?></td>
+	<td>
+		<a href="edit-products.php?id=<?php echo $row['id']; ?>"><i class="icon-edit"></i></a>
+		<a href="manage-products.php?id=<?php echo $row['id']; ?>&del=delete"
+		onClick="return confirm('Are you sure?')"><i class="icon-remove-sign"></i></a>
+	</td>
+</tr>
+<?php } ?>
+
+</tbody>
+</table>
+
+<!-- PAGINATION -->
+<div class="pagination">
+<ul>
+
+<?php if($page > 1){ ?>
+	<li><a href="?page=<?php echo $page-1; ?>&limit=<?php echo $limit; ?>&search=<?php echo $search; ?>">Prev</a></li>
+<?php } ?>
+
+<?php for($i=1; $i <= $totalPages; $i++){ ?>
+	<li class="<?php if($i==$page) echo 'active'; ?>">
+		<a href="?page=<?php echo $i; ?>&limit=<?php echo $limit; ?>&search=<?php echo $search; ?>">
+			<?php echo $i; ?>
+		</a>
+	</li>
+<?php } ?>
+
+<?php if($page < $totalPages){ ?>
+	<li><a href="?page=<?php echo $page+1; ?>&limit=<?php echo $limit; ?>&search=<?php echo $search; ?>">Next</a></li>
+<?php } ?>
+
+</ul>
+</div>
+
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</div>
 
 <?php include('include/footer.php');?>
 
