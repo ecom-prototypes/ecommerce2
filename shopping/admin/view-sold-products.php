@@ -14,7 +14,7 @@ $currentTime = date( 'd-m-Y h:i:s A', time () );
 
 if(isset($_GET['revert']))
 {
-    mysqli_query($con,"delete from products where id = '".$_GET['id']."'");
+    mysqli_query($con,"update orders set orderReverted=true where id = '".$_GET['oid']."'");
     $_SESSION['delmsg']="Order Reverted !!";
 }
 ?>
@@ -80,8 +80,19 @@ while($row=mysqli_fetch_array($query))
 											
 											<th>Sell Date</th>
 											<td><?php echo htmlentities($row['orderDate']);?></td>
+											<th>Sell Status</th>
+											<td><?php if($row['orderReverted']==0){
+														echo "Sold";
+													} else {
+														echo "Reverted";
+													} ?>
+											</td>
 										</tr>
-										
+
+										<tr>
+											<th>Sell Note</th>
+											<td><?php echo htmlentities($row['orderNote']);?></td>
+										</tr>
 										<tr>
 											<th>Product Name</th>
 											<td><?php echo htmlentities($row['productName']);?></td>
@@ -106,6 +117,7 @@ while($row=mysqli_fetch_array($query))
 												<th>Product Company</th>
 											<td><?php echo htmlentities($row['productCompany']);?></td>
 										</tr>
+										
                                         
 										
 
@@ -127,7 +139,13 @@ while($row=mysqli_fetch_array($query))
 
 
                 <tr>
-                    <td colspan="4">    <a href="updateorder.php?oid=<?php echo htmlentities($orderid);?>" title="Update order" target="_blank" class="btn btn-primary">Revert</a>
+                    <td colspan="4">    <a href="view-sold-products.php?oid=<?php echo htmlentities($orderid);?>&revert=true"
+   title="Update order"
+   class="btn btn-primary"
+   onclick="return confirm('Are you sure you want to revert this order?');">
+   Revert
+</a>
+
                     </td>
                 </tr>
             </table>

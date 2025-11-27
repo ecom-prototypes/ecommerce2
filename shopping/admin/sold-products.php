@@ -123,7 +123,7 @@ while($row = mysqli_fetch_array($query)){ ?>
     } else {
         echo "Reverted";
     } ?></td>
-	<td><?php echo htmlentities($row['postingDate']); ?></td>
+	<td><?php echo htmlentities($row['orderDate']); ?></td>
 	<td>
 		<a href="view-sold-products.php?oid=<?php echo $row['oid']; ?>">view</a>
 	</td>
