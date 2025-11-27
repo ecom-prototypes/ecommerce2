@@ -10,11 +10,7 @@ else{
 date_default_timezone_set('Asia/Kolkata');// change according timezone
 $currentTime = date( 'd-m-Y h:i:s A', time () );
 
-if(isset($_GET['del']))
-		  {
-		          mysqli_query($con,"delete from products where id = '".$_GET['id']."'");
-                  $_SESSION['delmsg']="Product deleted !!";
-		  }
+
 
 // ---------- PAGINATION SETTINGS ----------
 $limit = isset($_GET['limit']) ? intval($_GET['limit']) : 10; // items per page
@@ -24,9 +20,8 @@ $search = isset($_GET['search']) ? mysqli_real_escape_string($con,$_GET['search'
 $offset = ($page - 1) * $limit;
 
 // Count total products
-$countQuery = "SELECT COUNT(*) as total FROM products 
-               JOIN category ON category.id=products.category 
-               JOIN subcategory ON subcategory.id=products.subCategory
+$countQuery = "SELECT COUNT(*) as total FROM orders
+               JOIN products ON orders.productid=products.id 
                WHERE products.productName LIKE '%$search%'";
 
 $countResult = mysqli_query($con,$countQuery);
@@ -36,10 +31,11 @@ $totalPages = ceil($totalData / $limit);
 
 // Fetch products with LIMIT + OFFSET + SEARCH
 $query = mysqli_query($con,"
-    SELECT products.*,category.categoryName,subcategory.subcategory 
+    SELECT products.*,orders.id as oid, orders.*,category.categoryName,subcategory.subcategory
     FROM products 
     JOIN category ON category.id=products.category 
     JOIN subcategory ON subcategory.id=products.subCategory
+    JOIN orders ON orders.productid=products.id
     WHERE products.productName LIKE '%$search%'
     ORDER BY products.id DESC
     LIMIT $limit OFFSET $offset
@@ -106,6 +102,7 @@ $query = mysqli_query($con,"
 	<th>Category</th>
 	<th>Subcategory</th>
 	<th>Company</th>
+    <th>Status</th>
 	<th>Created</th>
 	<th>Action</th>
 </tr>
@@ -121,10 +118,14 @@ while($row = mysqli_fetch_array($query)){ ?>
 	<td><?php echo htmlentities($row['categoryName']); ?></td>
 	<td><?php echo htmlentities($row['subcategory']); ?></td>
 	<td><?php echo htmlentities($row['productCompany']); ?></td>
+    <td><?php if($row['orderReverted']==0){
+        echo "Sold";
+    } else {
+        echo "Reverted";
+    } ?></td>
 	<td><?php echo htmlentities($row['postingDate']); ?></td>
 	<td>
-		<a href="manage-products.php?id=<?php echo $row['id']; ?>&del=delete"
-		onClick="return confirm('Are you sure?')">Revert</a>
+		<a href="view-sold-products.php?oid=<?php echo $row['oid']; ?>">view</a>
 	</td>
 </tr>
 <?php } ?>
