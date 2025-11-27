@@ -17,10 +17,10 @@ if(isset($_POST['submit']))
 	$productprice=$_POST['productprice'];
 	$productpricebd=$_POST['productpricebd'];
 	$productdescription=$_POST['productDescription'];
-	$productscharge=$_POST['productShippingcharge'];
+	$productquantity=$_POST['productQuantity'];
 	$productavailability=$_POST['productAvailability'];
 	
-$sql=mysqli_query($con,"update  products set category='$category',subCategory='$subcat',productName='$productname',productCompany='$productcompany',productPrice='$productprice',productDescription='$productdescription',shippingCharge='$productscharge',productAvailability='$productavailability',productPriceBeforeDiscount='$productpricebd' where id='$pid' ");
+$sql=mysqli_query($con,"update  products set category='$category',subCategory='$subcat',productName='$productname',productCompany='$productcompany',productPrice='$productprice',productDescription='$productdescription',productAvailability='$productavailability',productQuantity='$productquantity',productPriceBeforeDiscount='$productpricebd' where id='$pid' ");
 $_SESSION['msg']="Product Updated Successfully !!";
 
 }
@@ -179,16 +179,16 @@ while($rw=mysqli_fetch_array($query))
 </div>
 
 <div class="control-group">
-<label class="control-label" for="basicinput">Product Shipping Charge</label>
+<label class="control-label" for="basicinput">Product Quantity</label>
 <div class="controls">
-<input type="text"    name="productShippingcharge"  placeholder="Enter Product Shipping Charge" value="<?php echo htmlentities($row['shippingCharge']);?>" class="span8 tip" required>
+<input type="number" name="productQuantity"  placeholder="Enter Product Quantity" value="<?php echo htmlentities($row['productQuantity']);?>" class="span8 tip" required>
 </div>
 </div>
 
 <div class="control-group">
-<label class="control-label" for="basicinput">Product Availability</label>
+<label class="control-label" for="basicinput">Product Availability(This will be shown to customer)</label>
 <div class="controls">
-<select   name="productAvailability"  id="productAvailability" class="span8 tip" required>
+<select name="productAvailability"  id="productAvailability" class="span8 tip" required>
 <option value="<?php echo htmlentities($row['productAvailability']);?>"><?php echo htmlentities($row['productAvailability']);?></option>
 <option value="In Stock">In Stock</option>
 <option value="Out of Stock">Out of Stock</option>
