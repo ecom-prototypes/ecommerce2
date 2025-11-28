@@ -11,6 +11,12 @@ date_default_timezone_set('Asia/Kolkata');// change according timezone
 $currentTime = date( 'd-m-Y h:i:s A', time () );
 
 }
+if(isset($_POST['updateordernote'])) {
+	$oid= intval($_POST['oid']);
+	$note = mysqli_real_escape_string($con, $_POST['ordernote']);
+	mysqli_query($con,"update orders set orderNote='$note' where id=$oid");
+	$_SESSION['msg']="Order Note updated !!";
+}
 
 if(isset($_GET['revert']))
 {
@@ -54,7 +60,7 @@ popUpWin = open(URLStr,'popUpWin', 'toolbar=no,location=no,directories=no,status
 
 	<div class="module">
 							<div class="module-head">
-								<h3>Order Details #<?php echo intval($_GET['oid']);?></h3>
+								<h3>Sold Details #<?php echo intval($_GET['oid']);?></h3>
 							</div>
 							<div class="module-body table">
 
@@ -78,9 +84,9 @@ while($row=mysqli_fetch_array($query))
 ?>										
 										<tr>
 											
-											<th>Sell Date</th>
+											<th>Sold Date</th>
 											<td><?php echo htmlentities($row['orderDate']);?></td>
-											<th>Sell Status</th>
+											<th>Sold Status</th>
 											<td><?php if($row['orderReverted']==0){
 														echo "Sold";
 													} else {
@@ -90,8 +96,13 @@ while($row=mysqli_fetch_array($query))
 										</tr>
 
 										<tr>
-											<th>Sell Note</th>
-											<td><?php echo htmlentities($row['orderNote']);?></td>
+											<th>Sold Note</th>
+											<td class="editable" data-id="<?php echo $row['oid']; ?>">
+												<span class="text-value"><?php echo htmlentities($row['orderNote']); ?></span>
+												<textarea type="text" class="edit-input" style="display:none;"></textarea>
+												<i class="icon-edit ordernote-edit" style="cursor:pointer; margin-left:5px;"></i>
+												<i class="icon-save ordernote-save" style="cursor:pointer; display:none; margin-left:5px;"></i>
+											</td>
 										</tr>
 										<tr>
 											<th>Product Name</th>
@@ -106,7 +117,7 @@ while($row=mysqli_fetch_array($query))
 											<td><?php echo htmlentities($row['subcategory']);?></td>
 										</tr>
 										<tr>
-											<th>Sell Quantity</th>
+											<th>Sold Quantity</th>
 											<td><?php echo htmlentities($row['orderQuantity']);?></td>
 												<th>Product Price</th>
 											<td>₹<?php echo htmlentities($row['productPrice']);?></td>
@@ -179,4 +190,5 @@ while($row=mysqli_fetch_array($query))
 			$('.dataTables_paginate > a:last-child').append('<i class="icon-chevron-right shaded"></i>');
 		} );
 	</script>
+	<script src="js/scripts.js"></script>
 </body>

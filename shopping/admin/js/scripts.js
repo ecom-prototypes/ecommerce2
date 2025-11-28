@@ -24,3 +24,37 @@ window.addEventListener('DOMContentLoaded', event => {
     }
 
 });
+
+$(document).on('click', '.ordernote-edit', function () {
+    var td = $(this).closest('td');
+    var span = td.find('.text-value');
+    var input = td.find('.edit-input');
+    var save = td.find('.ordernote-save');
+
+    input.val(span.text());
+    span.hide();
+    $(this).hide();
+    save.show();
+    input.show().focus();
+});
+
+$(document).on('click', '.ordernote-save', function () {
+    var td = $(this).closest('td');
+    var span = td.find('.text-value');
+    var input = td.find('.edit-input');
+    var edit = td.find('.ordernote-edit');
+    var newValue = input.val();
+
+    $.post("view-sold-products.php", {
+        oid: td.data('id'),
+        updateordernote: 'true',
+        ordernote: newValue
+    });
+
+
+    span.text(newValue);
+    input.hide();
+    $(this).hide();
+    edit.show();
+    span.show();
+});
