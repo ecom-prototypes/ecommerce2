@@ -31,7 +31,7 @@ $totalPages = ceil($totalData / $limit);
 
 // Fetch products with LIMIT + OFFSET + SEARCH
 $query = mysqli_query($con,"
-    SELECT products.*,orders.id as oid, orders.*,category.categoryName,subcategory.subcategory
+    SELECT products.*,orders.id as oid,orders.quantity as orderQuantity, orders.*,category.categoryName,subcategory.subcategory
     FROM products 
     JOIN category ON category.id=products.category 
     JOIN subcategory ON subcategory.id=products.subCategory
@@ -101,7 +101,7 @@ $query = mysqli_query($con,"
 	<th>Product Name</th>
 	<th>Category</th>
 	<th>Subcategory</th>
-	<th>Company</th>
+	<th>Quantity</th>
     <th>Status</th>
 	<th>Created</th>
 	<th>Action</th>
@@ -117,7 +117,7 @@ while($row = mysqli_fetch_array($query)){ ?>
 	<td><?php echo htmlentities($row['productName']); ?></td>
 	<td><?php echo htmlentities($row['categoryName']); ?></td>
 	<td><?php echo htmlentities($row['subcategory']); ?></td>
-	<td><?php echo htmlentities($row['productCompany']); ?></td>
+	<td><?php echo htmlentities($row['orderQuantity']); ?></td>
     <td><?php if($row['orderReverted']==0){
         echo "Sold";
     } else {

@@ -224,7 +224,9 @@ while($rw=mysqli_fetch_array($query))
 <?php } ?>
 	<div class="control-group">
 											<div class="controls">
-												<button type="submit" name="submit" class="btn">Update</button>
+												<a class="btn" href="manage-products.php?id=<?php echo $pid; ?>&del=delete"
+		onClick="return confirm('Are you sure?')">Delete</a>
+												<button style="float:right;" type="submit" name="submit" class="btn">Update</button>
 											</div>
 										</div>
 									</form>

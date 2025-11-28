@@ -18,11 +18,53 @@ if(isset($_POST['updateordernote'])) {
 	$_SESSION['msg']="Order Note updated !!";
 }
 
-if(isset($_GET['revert']))
-{
-    mysqli_query($con,"update orders set orderReverted=true where id = '".$_GET['oid']."'");
-    $_SESSION['delmsg']="Order Reverted !!";
+if (isset($_GET['revert'])) {
+
+    $oid = $_GET['oid'];
+
+    // Prepare the select statement to avoid SQL injection
+    $stmt = $con->prepare("SELECT productid, quantity FROM orders WHERE id = ? LIMIT 1");
+    $stmt->bind_param("i", $oid);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $res = $result->fetch_assoc();
+
+    if (!$res) {
+        $_SESSION['delmsg'] = "Order not found!";
+        return;
+    }
+
+    $productid = $res['productid'];
+    $orderQuantity = $res['quantity'];
+
+    $con->begin_transaction();
+
+    try {
+
+        // Revert order
+        $sql1 = $con->prepare("UPDATE orders SET orderReverted = TRUE, quantity = 0 WHERE id = ?");
+        $sql1->bind_param("i", $oid);
+        if (!$sql1->execute()) {
+            throw new Exception("Error executing order update: " . $con->error);
+        }
+
+        // Return quantity to product stock
+        $sql2 = $con->prepare("UPDATE products SET productQuantity = productQuantity + ? WHERE id = ?");
+        $sql2->bind_param("ii", $orderQuantity, $productid);
+        if (!$sql2->execute()) {
+            throw new Exception("Error updating product quantity: " . $con->error);
+        }
+
+        $con->commit();
+        $_SESSION['delmsg'] = "Order Reverted !!";
+
+    } catch (Exception $e) {
+
+        $con->rollback();
+        $_SESSION['delmsg'] = "Order Revert failed: " . $e->getMessage();
+    }
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -135,7 +177,7 @@ while($row=mysqli_fetch_array($query))
 										</tbody>
 								</table>
 								
-<?php } ?>
+
 
 
 			<table cellpadding="0" cellspacing="0" border="0" class="table table-bordered table-striped" style="margin-top:1%;" >
@@ -150,17 +192,18 @@ while($row=mysqli_fetch_array($query))
 
 
                 <tr>
-                    <td colspan="4">    <a href="view-sold-products.php?oid=<?php echo htmlentities($orderid);?>&revert=true"
-   title="Update order"
-   class="btn btn-primary"
-   onclick="return confirm('Are you sure you want to revert this order?');">
-   Revert
-</a>
+                    <td colspan="4">  <?php if ($row['orderReverted'] == 0) { ?>  <a href="view-sold-products.php?oid=<?php echo htmlentities($orderid);?>&revert=true"
+											title="Update order"
+											class="btn btn-primary"
+											onclick="return confirm('Are you sure you want to revert this order?');">
+											Revert
+											</a> 
+										<?php } ?>
 
                     </td>
                 </tr>
             </table>
-
+<?php } ?>
                         
             </div>
             </div>
