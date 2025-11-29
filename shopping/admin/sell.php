@@ -13,8 +13,8 @@ $currentTime = date( 'd-m-Y h:i:s A', time () );
 $query = mysqli_query($con,"select productName from products where id = '".$_GET['id']."' LIMIT 0,1");
 $res = mysqli_fetch_assoc($query);
 
+$_SESSION['delmsg']="";
 if (isset($_POST['submit'])) {
-
     $productid = $_GET['id'];
     $sellQty = $_POST['orderQuantity']; // quantity you want to sell
     $sellNote= $_POST['orderNote'];
@@ -56,7 +56,7 @@ if (isset($_POST['submit'])) {
             VALUES (?, ?, ?)
         ");
 
-        $sql2->bind_param("ii", $productid, $sellQty,$sellNote);
+        $sql2->bind_param("iii", $productid, $sellQty,$sellNote);
         if (!$sql2->execute()) {
             throw new Exception("Error creating order: " . $con->error);
         }
@@ -105,7 +105,7 @@ if (isset($_POST['submit'])) {
                         <strong>Well done!</strong>	<?php echo htmlentities($_SESSION['msg']);?><?php echo htmlentities($_SESSION['msg']="");?>
                     </div>
                 <?php } ?>
-                <?php if($_SESSION['delmsg']!=""){ ?>
+                <?php if(isset($_SESSION['delmsg']) && $_SESSION['delmsg']!=""){ ?>
                     <div class="alert alert-error">
                         <button type="button" class="close" data-dismiss="alert">×</button>
                         <strong>Error!</strong> <?php echo htmlentities($_SESSION['delmsg']); ?> 
@@ -126,7 +126,7 @@ if (isset($_POST['submit'])) {
                     </div>
 
                     <div class="col-auto">
-                        <button type="submit" class="btn btn-primary">
+                        <button type="submit" name="submit" class="btn btn-primary">
                             Submit
                         </button>
                     </div>
