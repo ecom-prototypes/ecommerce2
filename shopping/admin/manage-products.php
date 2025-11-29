@@ -108,7 +108,8 @@ $query = mysqli_query($con,"
 	<th>Quantity</th>
 	<th>Stock Status</th>
 	<th>Created</th>
-	<th>Action</th>
+	<th>Edit</th>
+	<th>Sell</th>
 </tr>
 </thead>
 <tbody>
@@ -126,6 +127,9 @@ while($row = mysqli_fetch_array($query)){ ?>
 	<td><?php echo htmlentities($row['postingDate']); ?></td>
 	<td>
 		<a href="edit-products.php?id=<?php echo $row['id']; ?>"><i class="icon-edit"></i></a>
+	</td>
+	<td>
+		<a href="sell.php?id=<?php echo $row['id']; ?>"><i class="icon-external-link"></i></a>
 	</td>
 </tr>
 <?php } ?>
