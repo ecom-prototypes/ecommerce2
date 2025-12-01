@@ -25,49 +25,44 @@ if (isset($_POST['submit'])) {
     $stmt->execute();
     $result = $stmt->get_result();
     $product = $result->fetch_assoc();
-
+    $currentStock = $product['productQuantity'];
     if (!$product) {
         $_SESSION['delmsg'] = "Product not found!";
-        return;
-    }
-
-    $currentStock = $product['productQuantity'];
-
-    // Block selling if stock is insufficient
-    if ($sellQty > $currentStock) {
+    } elseif($sellQty > $currentStock) {
         $_SESSION['delmsg'] = "Not enough stock!";
-        return;
+    } else {
+        $con->begin_transaction();
+
+        try {
+
+            // 2. Reduce product stock
+            $sql1 = $con->prepare("UPDATE products SET productQuantity = productQuantity - ? WHERE id = ?");
+            $sql1->bind_param("ii", $sellQty, $productid);
+            if (!$sql1->execute()) {
+                throw new Exception("Error updating product stock: " . $con->error);
+            }
+
+            // 3. Insert new order entry
+            $sql2 = $con->prepare("
+                INSERT INTO orders (productid, quantity, orderNote) 
+                VALUES (?, ?, ?)
+            ");
+
+            $sql2->bind_param("iis", $productid, $sellQty,$sellNote);
+            if (!$sql2->execute()) {
+                throw new Exception("Error creating order: " . $con->error);
+            }
+
+            $con->commit();
+            $_SESSION['msg'] = "Product Sold Successfully!";
+
+        } catch (Exception $e) {
+            $con->rollback();
+            $_SESSION['delmsg'] = "Sale Failed: " . $e->getMessage();
+        }
     }
 
-    $con->begin_transaction();
-
-    try {
-
-        // 2. Reduce product stock
-        $sql1 = $con->prepare("UPDATE products SET productQuantity = productQuantity - ? WHERE id = ?");
-        $sql1->bind_param("ii", $sellQty, $productid);
-        if (!$sql1->execute()) {
-            throw new Exception("Error updating product stock: " . $con->error);
-        }
-
-        // 3. Insert new order entry
-        $sql2 = $con->prepare("
-            INSERT INTO orders (productid, quantity, orderNote) 
-            VALUES (?, ?, ?)
-        ");
-
-        $sql2->bind_param("iii", $productid, $sellQty,$sellNote);
-        if (!$sql2->execute()) {
-            throw new Exception("Error creating order: " . $con->error);
-        }
-
-        $con->commit();
-        $_SESSION['msg'] = "Product Sold Successfully!";
-
-    } catch (Exception $e) {
-        $con->rollback();
-        $_SESSION['delmsg'] = "Sale Failed: " . $e->getMessage();
-    }
+    
 }
 
 ?>
@@ -99,7 +94,7 @@ if (isset($_POST['submit'])) {
                 <h3><?php echo $res['productName'] ?></h3>
             </div>
             <div class="module-body mx-2">
-                <?php if(isset($_POST['submit'])) {?>
+                <?php if(isset($_POST['submit']) and !isset($_SESSION['delmsg'])) {?>
                     <div class="alert alert-success">
                         <button type="button" class="close" data-dismiss="alert">×</button>
                         <strong>Well done!</strong>	<?php echo htmlentities($_SESSION['msg']);?><?php echo htmlentities($_SESSION['msg']="");?>
