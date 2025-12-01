@@ -1,5 +1,5 @@
 <div class="span3">
-					<div class="sidebar">
+					<div class="sidebar d-none d-md-block" >
 
 							
 								
