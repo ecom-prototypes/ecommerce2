@@ -1,8 +1,6 @@
 <div class="span3">
 					<div class="sidebar">
 
-
-<ul class="widget widget-menu unstyled">
 							
 								
 
@@ -13,19 +11,14 @@
                                 <li><a href="subcategory.php"><i class="menu-icon icon-tasks"></i>Sub Category </a></li>
                                 <li><a href="insert-product.php"><i class="menu-icon icon-paste"></i>Insert Product </a></li>
                                 <li><a href="manage-products.php"><i class="menu-icon icon-table"></i>Manage Products </a></li>
+								<li>
+									<a href="logout.php" onclick="return confirm('Are you sure you want to logout?');">
+										<i class="menu-icon icon-signout"></i>
+										Logout
+									</a>
+								</li>
                         
                         </ul><!--/.widget-nav-->
-
-						<ul class="widget widget-menu unstyled">
-							<!-- <li><a href="user-logs.php"><i class="menu-icon icon-tasks"></i>User Login Log </a></li> -->
-							
-							<li>
-								<a href="logout.php">
-									<i class="menu-icon icon-signout"></i>
-									Logout
-								</a>
-							</li>
-						</ul>
 
 					</div><!--/.sidebar-->
 				</div><!--/.span3-->
