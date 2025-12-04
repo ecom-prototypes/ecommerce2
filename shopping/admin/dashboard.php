@@ -2,10 +2,10 @@
 session_start();
 include('include/config.php');  // your DB connection file
 
-// if(strlen($_SESSION['alogin']) == 0){
-//     header('location:index.php');
-//     exit;
-// }
+if(strlen($_SESSION['alogin']) == 0){
+    header('location:index.php');
+    exit;
+}
 
 // Fetch summary counts
 function getCount($con, $table, $where = "") {

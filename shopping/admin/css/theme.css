@@ -3766,3 +3766,7 @@ table tbody tr:hover {
         font-size: 14px;
     }
 }
+
+.table th {
+  text-wrap-mode: nowrap;
+}

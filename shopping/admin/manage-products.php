@@ -10,6 +10,16 @@ else{
 date_default_timezone_set('Asia/Kolkata');// change according timezone
 $currentTime = date( 'd-m-Y h:i:s A', time () );
 
+$sort = isset($_GET['sort']) ? $_GET['sort'] : "id";
+$order = isset($_GET['order']) ? $_GET['order'] : "DESC";
+
+$allowedSort = ['productName','productPrice','productQuantity','categoryName','subcategory','postingDate','id'];
+$allowedOrder = ['ASC','DESC'];
+
+if(!in_array($sort, $allowedSort)) $sort = "id";
+if(!in_array($order, $allowedOrder)) $order = "DESC";
+
+
 if(isset($_GET['del']))
 		  {
 		          mysqli_query($con,"delete from products where id = '".$_GET['id']."'");
@@ -41,9 +51,10 @@ $query = mysqli_query($con,"
     JOIN category ON category.id=products.category 
     JOIN subcategory ON subcategory.id=products.subCategory
     WHERE products.productName LIKE '%$search%'
-    ORDER BY products.id DESC
+    ORDER BY $sort $order
     LIMIT $limit OFFSET $offset
 ");
+$nextOrder = ($order == "ASC") ? "DESC" : "ASC";
 
 ?>
 <!DOCTYPE html>
@@ -101,14 +112,40 @@ $query = mysqli_query($con,"
 <table class="table table-bordered table-striped">
 <thead>
 <tr>
-	<th>#</th>
-	<th>Product Name</th>
-	<th>Price</th>
+	<th><a href="?sort=id&order=<?php echo $nextOrder; ?>&page=<?php echo $page; ?>&limit=<?php echo $limit; ?>&search=<?php echo $search; ?>">
+		SN.
+	</a>
+	<?php if($sort=='id') echo $order=='ASC'?'↑':'↓'; ?>
+</th>
+	<th>
+	<a href="?sort=productName&order=<?php echo $nextOrder; ?>&page=<?php echo $page; ?>&limit=<?php echo $limit; ?>&search=<?php echo $search; ?>">
+		Product Name
+	</a>
+	<?php if($sort=='productName') echo $order=='ASC'?'↑':'↓'; ?>
+</th>
+	<th>
+	<a href="?sort=productPrice&order=<?php echo $nextOrder; ?>&page=<?php echo $page; ?>&limit=<?php echo $limit; ?>&search=<?php echo $search; ?>">
+		Price
+	</a>
+	<?php if($sort=='productPrice') echo $order=='ASC'?'↑':'↓'; ?>
+</th>
 	<th>Category</th>
 	<th>Subcategory</th>
-	<th>Quantity</th>
+	
+<th>
+	<a href="?sort=productQuantity&order=<?php echo $nextOrder; ?>&page=<?php echo $page; ?>&limit=<?php echo $limit; ?>&search=<?php echo $search; ?>">
+		Quantity
+	</a>
+	<?php if($sort=='productQuantity') echo $order=='ASC'?'↑':'↓'; ?>
+</th>
 	<th>Stock Status</th>
-	<th>Created</th>
+	
+<th>
+	<a href="?sort=postingDate&order=<?php echo $nextOrder; ?>&page=<?php echo $page; ?>&limit=<?php echo $limit; ?>&search=<?php echo $search; ?>">
+		Created
+	</a>
+	<?php if($sort=='postingDate') echo $order=='ASC'?'↑':'↓'; ?>
+</th>
 	<th>Edit</th>
 	<th>Sell</th>
 </tr>
@@ -144,19 +181,19 @@ while($row = mysqli_fetch_array($query)){ ?>
 <ul>
 
 <?php if($page > 1){ ?>
-	<li><a href="?page=<?php echo $page-1; ?>&limit=<?php echo $limit; ?>&search=<?php echo $search; ?>">Prev</a></li>
+	<li><a href="?sort=<?php echo $sort; ?>&order=<?php echo $order; ?>&page=<?php echo $page-1; ?>&limit=<?php echo $limit; ?>&search=<?php echo $search; ?>">Prev</a></li>
 <?php } ?>
 
 <?php for($i=1; $i <= $totalPages; $i++){ ?>
 	<li class="<?php if($i==$page) echo 'active'; ?>">
-		<a href="?page=<?php echo $i; ?>&limit=<?php echo $limit; ?>&search=<?php echo $search; ?>">
+		<a href="?sort=<?php echo $sort; ?>&order=<?php echo $order; ?>&page=<?php echo $i; ?>&limit=<?php echo $limit; ?>&search=<?php echo $search; ?>">
 			<?php echo $i; ?>
 		</a>
 	</li>
 <?php } ?>
 
 <?php if($page < $totalPages){ ?>
-	<li><a href="?page=<?php echo $page+1; ?>&limit=<?php echo $limit; ?>&search=<?php echo $search; ?>">Next</a></li>
+	<li><a href="?sort=<?php echo $sort; ?>&order=<?php echo $order; ?>&page=<?php echo $page+1; ?>&limit=<?php echo $limit; ?>&search=<?php echo $search; ?>">Next</a></li>
 <?php } ?>
 
 </ul>
