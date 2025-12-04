@@ -16,17 +16,17 @@ $search = isset($_GET['search']) ? mysqli_real_escape_string($con,$_GET['search'
 $offset = ($page - 1) * $limit;
 
 // ---------- SORT SETTINGS ----------
-$sort = isset($_GET['sort']) ? $_GET['sort'] : "id";
+$sort = isset($_GET['sort']) ? $_GET['sort'] : "oid";
 $order = isset($_GET['order']) ? $_GET['order'] : "DESC";
 
 $allowedSort = [
     "productName", "soldPrice", "categoryName", "subcategory",
-    "orderQuantity", "orderReverted", "orderDate", "id"
+    "orderQuantity", "orderReverted", "orderDate", "oid"
 ];
 
 $allowedOrder = ["ASC","DESC"];
 
-if(!in_array($sort, $allowedSort)) $sort = "id";
+if(!in_array($sort, $allowedSort)) $sort = "oid";
 if(!in_array($order, $allowedOrder)) $order = "DESC";
 
 $nextOrder = ($order == "ASC") ? "DESC" : "ASC";
@@ -105,7 +105,11 @@ $query = mysqli_query($con,"
 <table class="table table-bordered table-striped">
 <thead>
 <tr>
-	<th>#</th>
+	<th>
+		<a href="?sort=id&order=<?php echo $nextOrder; ?>&page=<?php echo $page; ?>&limit=<?php echo $limit; ?>&search=<?php echo $search; ?>">
+			SN. <?php if($sort=="id") echo ($order=="ASC"?"↑":"↓"); ?>
+		</a>
+	</th>
 
 	<th>
 		<a href="?sort=productName&order=<?php echo $nextOrder; ?>&page=<?php echo $page; ?>&limit=<?php echo $limit; ?>&search=<?php echo $search; ?>">
