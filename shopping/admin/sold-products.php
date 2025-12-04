@@ -107,7 +107,7 @@ $query = mysqli_query($con,"
 <tr>
 	<th>
 		<a href="?sort=id&order=<?php echo $nextOrder; ?>&page=<?php echo $page; ?>&limit=<?php echo $limit; ?>&search=<?php echo $search; ?>">
-			SN. <?php if($sort=="id") echo ($order=="ASC"?"↑":"↓"); ?>
+			SN. <?php if($sort=="oid") echo ($order=="ASC"?"↑":"↓"); ?>
 		</a>
 	</th>
 
