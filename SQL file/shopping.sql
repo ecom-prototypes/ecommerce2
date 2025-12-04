@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 04, 2025 at 07:39 AM
+-- Generation Time: Dec 04, 2025 at 10:41 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -83,14 +83,6 @@ CREATE TABLE `orders` (
   `orderDate` timestamp NOT NULL DEFAULT current_timestamp(),
   `orderReverted` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
-
---
--- Dumping data for table `orders`
---
-
-INSERT INTO `orders` (`id`, `productId`, `quantity`, `soldPrice`, `orderNote`, `orderDate`, `orderReverted`) VALUES
-(14, '22', 0, 11000, 'test', '2025-12-04 06:19:34', 1),
-(15, '22', 0, 10000, 'test', '2025-12-04 06:33:18', 1);
 
 -- --------------------------------------------------------
 
@@ -250,7 +242,7 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `productreviews`
