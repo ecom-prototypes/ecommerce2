@@ -149,8 +149,20 @@ while($row=mysqli_fetch_array($query))
 										<tr>
 											<th>Product Name</th>
 											<td><?php echo htmlentities($row['productName']);?></td>
-												<th>Product Image</th>
-											<td><img src="productimages/<?php echo htmlentities($row['pid']."/".$row['productImage1']);?>" width="100"></td>
+											<th>Product Company</th>
+											<td><?php echo htmlentities($row['productCompany']);?></td>
+										</tr>
+										<tr>
+											<th>Product Description</th>
+											<td><?php echo $row['productDescription'];?></td>
+											<th>Sold Quantity</th>
+											<td><?php echo htmlentities($row['orderQuantity']);?></td>
+										</tr>
+										<tr>
+											<th>Sold Price</th>
+											<td>₹<?php echo htmlentities($row['soldPrice']);?></td>
+												<th>Product Price</th>
+											<td>₹<?php echo htmlentities($row['productPrice']);?></td>
 										</tr>
                                         <tr>
 											<th>Category</th>
@@ -158,17 +170,12 @@ while($row=mysqli_fetch_array($query))
 												<th>Sub Category</th>
 											<td><?php echo htmlentities($row['subcategory']);?></td>
 										</tr>
-										<tr>
-											<th>Sold Quantity</th>
-											<td><?php echo htmlentities($row['orderQuantity']);?></td>
-												<th>Product Price</th>
-											<td>₹<?php echo htmlentities($row['productPrice']);?></td>
-										</tr>
+										
                                         <tr>
-											<th>Product Description</th>
-											<td><?php echo $row['productDescription'];?></td>
-												<th>Product Company</th>
-											<td><?php echo htmlentities($row['productCompany']);?></td>
+											
+												
+											<th>Product Image</th>
+											<td><img src="productimages/<?php echo htmlentities($row['pid']."/".$row['productImage1']);?>" width="100"></td>
 										</tr>
 										
                                         

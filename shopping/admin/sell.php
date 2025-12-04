@@ -18,6 +18,7 @@ if (isset($_POST['submit'])) {
     $productid = $_GET['id'];
     $sellQty = $_POST['orderQuantity']; // quantity you want to sell
     $sellNote= $_POST['orderNote'];
+    $sellPrice = $_POST['sellPrice'];
 
     // 1. Fetch current product stock
     $stmt = $con->prepare("SELECT productQuantity FROM products WHERE id = ? LIMIT 1");
@@ -44,11 +45,11 @@ if (isset($_POST['submit'])) {
 
             // 3. Insert new order entry
             $sql2 = $con->prepare("
-                INSERT INTO orders (productid, quantity, orderNote) 
-                VALUES (?, ?, ?)
+                INSERT INTO orders (productid, quantity, soldPrice, orderNote) 
+                VALUES (?, ?, ?, ?)
             ");
 
-            $sql2->bind_param("iis", $productid, $sellQty,$sellNote);
+            $sql2->bind_param("iiis", $productid, $sellQty, $sellPrice, $sellNote);
             if (!$sql2->execute()) {
                 throw new Exception("Error creating order: " . $con->error);
             }
@@ -112,7 +113,11 @@ if (isset($_POST['submit'])) {
 
                     <div class="col-auto">
                         <input type="number" name="orderQuantity" class="form-control" 
-                            placeholder="Qty" min="1" required>
+                            placeholder="Quantity" min="1" required>
+                    </div>
+                    <div class="col-auto">
+                        <input type="number" name="sellPrice" class="form-control" 
+                            placeholder="Price" min="1" required>
                     </div>
 
                     <div class="col-auto">
