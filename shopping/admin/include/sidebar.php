@@ -6,6 +6,7 @@
 
 
 						<ul class="widget widget-menu unstyled">
+							<li><a href="dashboard.php"><i class="menu-icon icon-tasks"></i>Dashboard</a></li>
 								<li><a href="sold-products.php"><i class="menu-icon icon-tasks"></i>Sold Products </a></li>
                                 <li><a href="category.php"><i class="menu-icon icon-tasks"></i>Create Category </a></li>
                                 <li><a href="subcategory.php"><i class="menu-icon icon-tasks"></i>Sub Category </a></li>

@@ -2,10 +2,10 @@
 session_start();
 include('include/config.php');  // your DB connection file
 
-if(strlen($_SESSION['alogin']) == 0){
-    header('location:index.php');
-    exit;
-}
+// if(strlen($_SESSION['alogin']) == 0){
+//     header('location:index.php');
+//     exit;
+// }
 
 // Fetch summary counts
 function getCount($con, $table, $where = "") {
@@ -50,7 +50,7 @@ $latestOrders = mysqli_query($con, "
 	<link type="text/css" href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600' rel='stylesheet'>
     <title>Dashboard | Admin</title>
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    
 
     <style>
         body { background: #f7f7f7; }
@@ -63,117 +63,117 @@ $latestOrders = mysqli_query($con, "
 <?php include('include/header.php');?>
 
 <div class="wrapper">
-<div class="container mt-5">
-<div class="row">
-<?php include('include/sidebar.php');?>
+    <div class="container mt-5">
+        <div class="row">
+        <?php include('include/sidebar.php');?>
 
-<div class="span9">
-    <h2 class="mb-4">Admin Dashboard</h2>
+            <div class="span9">
+                <h2 class="mb-4">Admin Dashboard</h2>
 
-    <!-- Summary cards -->
-    <div class="row g-3">
-        <div class="col-md-3">
-            <div class="card-box bg-primary text-white">
-                <div class="card-title">Total Products</div>
-                <div class="value"><?= $totalProducts ?></div>
-            </div>
-        </div>
+                <!-- Summary cards -->
+                <div class="row rowflex">
+                    <div class="col-md-3">
+                        <div class="card-box bg-primary text-white">
+                            <div class="card-title">Total Products</div>
+                            <div class="value"><?= $totalProducts ?></div>
+                        </div>
+                    </div>
 
-        <div class="col-md-3">
-            <div class="card-box bg-success text-white">
-                <div class="card-title">Categories</div>
-                <div class="value"><?= $totalCategories ?></div>
-            </div>
-        </div>
+                    <div class="col-md-3">
+                        <div class="card-box bg-success text-white">
+                            <div class="card-title">Categories</div>
+                            <div class="value"><?= $totalCategories ?></div>
+                        </div>
+                    </div>
 
-        <div class="col-md-3">
-            <div class="card-box bg-info text-white">
-                <div class="card-title">Subcategories</div>
-                <div class="value"><?= $totalSubCategories ?></div>
-            </div>
-        </div>
+                    <div class="col-md-3">
+                        <div class="card-box bg-info text-white">
+                            <div class="card-title">Subcategories</div>
+                            <div class="value"><?= $totalSubCategories ?></div>
+                        </div>
+                    </div>
 
-        <div class="col-md-3">
-            <div class="card-box bg-warning text-dark">
-                <div class="card-title">Total Orders</div>
-                <div class="value"><?= $totalOrders ?></div>
-            </div>
-        </div>
+                    <div class="col-md-3">
+                        <div class="card-box bg-warning text-dark">
+                            <div class="card-title">Total Orders</div>
+                            <div class="value"><?= $totalOrders ?></div>
+                        </div>
+                    </div>
 
-        <div class="col-md-3 mt-3">
-            <div class="card-box bg-danger text-white">
-                <div class="card-title">Reverted Orders</div>
-                <div class="value"><?= $totalReverted ?></div>
-            </div>
-        </div>
+                    <div class="col-md-3 ">
+                        <div class="card-box bg-danger text-white">
+                            <div class="card-title">Reverted Orders</div>
+                            <div class="value"><?= $totalReverted ?></div>
+                        </div>
+                    </div>
 
-        <div class="col-md-3 mt-3">
-            <div class="card-box bg-dark text-white">
-                <div class="card-title">Total Sold Qty</div>
-                <div class="value"><?= $soldQty ?></div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Low Stock -->
-    <div class="mt-5">
-        <h4>Low Stock Products (≤ 2)</h4>
-        <table class="table table-bordered table-striped">
-            <thead>
-                <tr>
-                    <th>Product Name</th>
-                    <th>Available Qty</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php while ($row = mysqli_fetch_assoc($lowStockQuery)) { ?>
-                    <tr>
-                        <td><?= $row['productName'] ?></td>
-                        <td><?= $row['productQuantity'] ?></td>
-                    </tr>
-                <?php } ?>
-            </tbody>
-        </table>
-    </div>
-
-    <!-- Latest Orders -->
-    <div class="mt-5">
-        <h4>Latest Orders</h4>
-        <table class="table table-hover table-bordered">
-            <thead class="table-dark">
-                <tr>
-                    <th>Order ID</th>
-                    <th>Product</th>
-                    <th>Qty</th>
-                    <th>Price</th>
-                    <th>Date</th>
-                    <th>Status</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php while ($o = mysqli_fetch_assoc($latestOrders)) { ?>
-                    <tr>
-                        <td><?= $o['id'] ?></td>
-                        <td><?= $o['productName'] ?></td>
-                        <td><?= $o['quantity'] ?></td>
-                        <td>₹<?= $o['soldPrice'] ?></td>
-                        <td><?= $o['orderDate'] ?></td>
-                        <td>
-                            <?php if($o['orderReverted']) { ?>
-                                <span class="badge bg-danger">Reverted</span>
-                            <?php } else { ?>
-                                <span class="badge bg-success">Completed</span>
+                    <div class="col-md-3 ">
+                        <div class="card-box bg-dark text-white">
+                            <div class="card-title">Total Sold Qty</div>
+                            <div class="value"><?= $soldQty ?></div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <!-- Low Stock -->
+                <div class="mt-5">
+                    <h4>Low Stock Products (≤ 2)</h4>
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Product Name</th>
+                                <th>Available Qty</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php while ($row = mysqli_fetch_assoc($lowStockQuery)) { ?>
+                                <tr>
+                                    <td><?= $row['productName'] ?></td>
+                                    <td><?= $row['productQuantity'] ?></td>
+                                </tr>
                             <?php } ?>
-                        </td>
-                    </tr>
-                <?php } ?>
-            </tbody>
-        </table>
-    </div>
+                        </tbody>
+                    </table>
+                </div>
+                <br />
+                <!-- Latest Orders -->
+                <div class="mt-5">
+                    <h4>Latest Orders</h4>
+                    <table class="table table-hover table-bordered">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Product</th>
+                                <th>Qty</th>
+                                <th>Price</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php while ($o = mysqli_fetch_assoc($latestOrders)) { ?>
+                                <tr>
+                                    <td><?= $o['id'] ?></td>
+                                    <td><?= $o['productName'] ?></td>
+                                    <td><?= $o['quantity'] ?></td>
+                                    <td>₹<?= $o['soldPrice'] ?></td>
+                                    <td><?= $o['orderDate'] ?></td>
+                                    <td>
+                                        <?php if($o['orderReverted']) { ?>
+                                            <span class="badge bg-danger">Reverted</span>
+                                        <?php } else { ?>
+                                            <span class="badge bg-success">Completed</span>
+                                        <?php } ?>
+                                    </td>
+                                </tr>
+                            <?php } ?>
+                        </tbody>
+                    </table>
+                </div>
 
-</div>
-</div>
-</div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <?php include('include/footer.php');?>
