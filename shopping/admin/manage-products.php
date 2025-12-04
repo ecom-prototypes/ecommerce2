@@ -13,7 +13,7 @@ $currentTime = date( 'd-m-Y h:i:s A', time () );
 $sort = isset($_GET['sort']) ? $_GET['sort'] : "id";
 $order = isset($_GET['order']) ? $_GET['order'] : "DESC";
 
-$allowedSort = ['productName','productPrice','productQuantity','categoryName','subcategory','postingDate','id'];
+$allowedSort = ['productName','productPrice','productQuantity','categoryName','subcategory','productAvailability','postingDate','id'];
 $allowedOrder = ['ASC','DESC'];
 
 if(!in_array($sort, $allowedSort)) $sort = "id";
@@ -138,8 +138,12 @@ $nextOrder = ($order == "ASC") ? "DESC" : "ASC";
 	</a>
 	<?php if($sort=='productQuantity') echo $order=='ASC'?'↑':'↓'; ?>
 </th>
-	<th>Stock Status</th>
-	
+<th>
+	<a href="?sort=productAvailability&order=<?php echo $nextOrder; ?>&page=<?php echo $page; ?>&limit=<?php echo $limit; ?>&search=<?php echo $search; ?>">
+		Availability
+	</a>
+	<?php if($sort=='productAvailability') echo $order=='ASC'?'↑':'↓'; ?>
+</th>
 <th>
 	<a href="?sort=postingDate&order=<?php echo $nextOrder; ?>&page=<?php echo $page; ?>&limit=<?php echo $limit; ?>&search=<?php echo $search; ?>">
 		Created
