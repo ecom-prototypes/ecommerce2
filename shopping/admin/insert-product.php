@@ -24,18 +24,18 @@ if(isset($_POST['submit']))
 	$productimage3=$_FILES["productimage3"]["name"];
 //for getting product id
 $query=mysqli_query($con,"select max(id) as pid from products");
-	$result=mysqli_fetch_array($query);
-	 $productid=$result['pid']+1;
-	$dir="productimages/$productid";
-if(!is_dir($dir)){
-		mkdir("productimages/".$productid);
-	}
-
-	move_uploaded_file($_FILES["productimage1"]["tmp_name"],"productimages/$productid/".$_FILES["productimage1"]["name"]);
-	move_uploaded_file($_FILES["productimage2"]["tmp_name"],"productimages/$productid/".$_FILES["productimage2"]["name"]);
-	move_uploaded_file($_FILES["productimage3"]["tmp_name"],"productimages/$productid/".$_FILES["productimage3"]["name"]);
+$result=mysqli_fetch_array($query);
 $sql=mysqli_query($con,"insert into products(category,subCategory,productName,productCompany,productPrice,productDescription,productAvailability,productQuantity, productImage1,productImage2,productImage3,productPriceBeforeDiscount) values('$category','$subcat','$productname','$productcompany','$productprice','$productdescription','$productavailability','$productquantity','$productimage1','$productimage2','$productimage3','$productpricebd')");
 $_SESSION['msg']="Product Inserted Successfully !!";
+$productid = mysqli_insert_id($con);
+$dir="productimages/$productid";
+if(!is_dir($dir)){
+	mkdir($dir);
+}
+
+move_uploaded_file($_FILES["productimage1"]["tmp_name"],"$dir/".$_FILES["productimage1"]["name"]);
+move_uploaded_file($_FILES["productimage2"]["tmp_name"],"$dir/".$_FILES["productimage2"]["name"]);
+move_uploaded_file($_FILES["productimage3"]["tmp_name"],"$dir/".$_FILES["productimage3"]["name"]);
 
 }
 
