@@ -1,228 +1,188 @@
-<?php session_start();
-include_once('includes/config.php');
-if(strlen( $_SESSION["aid"])==0)
-{   
-header('location:logout.php');
-} else { 
-//Dashboard COunt
-$ret=mysqli_query($con,"select count(id) as totalorders,
-count(if((orderStatus='' || orderStatus is null),0,null)) as neworders,
-count(if(orderStatus='Packed', 0,null)) as packedorders,
-count(if(orderStatus='Dispatched',  0,null)) as dispatchedorders,
-count(if(orderStatus='In Transit',  0,null)) as intransitorders,
-count(if(orderStatus='Out For Delivery', 0,null)) as outfdorders,
-count(if(orderStatus='Delivered', 0,null)) as deliveredorders,
-count(if(orderStatus='Cancelled', 0,null)) as cancelledorders
-from orders;");
-$results=mysqli_fetch_array($ret);
-$torders=$results['totalorders'];
-$norders=$results['neworders'];
-$porders=$results['packedorders'];
-$dtorders=$results['dispatchedorders'];
-$intorders=$results['intransitorders'];
-$otforders=$results['outfdorders'];
-$deliveredorders=$results['deliveredorders'];
-$cancelledorders=$results['cancelledorders'];
-//COde for Registered users
-$ret1=mysqli_query($con,"select count(id) as totalusers from users;");
-$results1=mysqli_fetch_array($ret1);
-$tregusers=$results1['totalusers'];
+<?php
+session_start();
+include('include/config.php');  // your DB connection file
+
+if(strlen($_SESSION['alogin']) == 0){
+    header('location:index.php');
+    exit;
+}
+
+// Fetch summary counts
+function getCount($con, $table, $where = "") {
+    $sql = "SELECT COUNT(*) AS total FROM $table $where";
+    $res = mysqli_query($con, $sql);
+    $row = mysqli_fetch_assoc($res);
+    return $row['total'];
+}
+
+$totalProducts      = getCount($con, "products");
+$totalCategories    = getCount($con, "category");
+$totalSubCategories = getCount($con, "subcategory");
+$totalOrders        = getCount($con, "orders");
+$totalReverted      = getCount($con, "orders", "WHERE orderReverted = 1");
+
+// Total sold quantity
+$sql = "SELECT SUM(quantity) AS qty FROM orders WHERE orderReverted = 0";
+$res = mysqli_query($con, $sql);
+$soldQty = mysqli_fetch_assoc($res)['qty'] ?? 0;
+
+// Low stock products
+$lowStockQuery = mysqli_query($con, "SELECT productName, productQuantity FROM products WHERE productQuantity <= 2 ORDER BY productQuantity ASC");
+
+// Latest orders
+$latestOrders = mysqli_query($con, "
+    SELECT o.id, p.productName, o.quantity, o.soldPrice, o.orderDate, o.orderReverted 
+    FROM orders o 
+    JOIN products p ON p.id = o.productId
+    ORDER BY o.id DESC LIMIT 10
+");
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
-        <title>Shooping Portal | Admin Dashboard</title>
-        <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
-        <link href="css/styles.css" rel="stylesheet" />
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
-    </head>
-    <body class="sb-nav-fixed">
-   <?php include_once('includes/header.php');?>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link type="text/css" href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link type="text/css" href="bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
+	<link type="text/css" href="css/theme.css" rel="stylesheet">
+	<link type="text/css" href="images/icons/css/font-awesome.css" rel="stylesheet">
+	<link type="text/css" href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600' rel='stylesheet'>
+    <title>Dashboard | Admin</title>
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
 
-        <div id="layoutSidenav">
-          <?php include_once('includes/sidebar.php');?>
-            <div id="layoutSidenav_content">
-                <main>
-                    <div class="container-fluid px-4">
-                        <h1 class="mt-4">Dashboard</h1>
-                        <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item active">Dashboard</li>
-                        </ol>
-           <div class="row">
-                            <div class="col-lg-6 col-xl-3 mb-4">
-                                <div class="card bg-primary text-white h-100">
-                                    <div class="card-body">
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <div class="me-3">
-                                                <div class="text-white-75 small">Total Order</div>
-                                                <div class="text-lg fw-bold"><?php echo $torders; ?></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card-footer d-flex align-items-center justify-content-between small">
-                                        <a class="text-white stretched-link" href="all-orders.php">View Details</a>
-                              
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-xl-3 mb-4">
-                                <div class="card bg-danger text-white h-100">
-                                    <div class="card-body">
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <div class="me-3">
-                                                <div class="text-white-75 small">New Orders</div>
-                                                <div class="text-lg fw-bold"><?php echo $norders; ?></div>
-                                            </div>
-                                 
-                                        </div>
-                                    </div>
-                                    <div class="card-footer d-flex align-items-center justify-content-between small">
-                                        <a class="text-white stretched-link" href="new-order.php">View Details</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-xl-3 mb-4">
-                                <div class="card bg-warning text-white h-100">
-                                    <div class="card-body">
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <div class="me-3">
-                                                <div class="text-white-75 small">Packed Orders</div>
-                                                <div class="text-lg fw-bold"><?php echo $porders; ?></div>
-                                            </div>
-                                   
-                                        </div>
-                                    </div>
-                                    <div class="card-footer d-flex align-items-center justify-content-between small">
-                                        <a class="text-white stretched-link" href="packed-orders.php">View Tasks</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-xl-3 mb-4">
-                                <div class="card bg-secondary text-white h-100">
-                                    <div class="card-body">
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <div class="me-3">
-                                                <div class="text-white-75 small">Dispatched Orders</div>
-                                                <div class="text-lg fw-bold"><?php echo $dtorders; ?></div>
-                                            </div>
-    
-                                        </div>
-                                    </div>
-                                    <div class="card-footer d-flex align-items-center justify-content-between small">
-                                        <a class="text-white stretched-link" href="dispatched-orders.php">View Requests</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-<!-------------------------------------->
-     <div class="row">
-                            <div class="col-lg-6 col-xl-3 mb-4">
-                                <div class="card bg-warning text-white h-100">
-                                    <div class="card-body">
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <div class="me-3">
-                                                <div class="text-white-75 small">In Transit Orders</div>
-                                                <div class="text-lg fw-bold"><?php echo $intorders; ?></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card-footer d-flex align-items-center justify-content-between small">
-                                        <a class="text-white stretched-link" href="intransit-orders.php">View Details</a>
-                              
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-xl-3 mb-4">
-                                <div class="card bg-primary text-white h-100">
-                                    <div class="card-body">
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <div class="me-3">
-                                                <div class="text-white-75 small">Out for Delivery Orders</div>
-                                                <div class="text-lg fw-bold"><?php echo $otforders; ?></div>
-                                            </div>
-                                 
-                                        </div>
-                                    </div>
-                                    <div class="card-footer d-flex align-items-center justify-content-between small">
-                                        <a class="text-white stretched-link" href="outfordelivery-orders.php">View Details</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-xl-3 mb-4">
-                                <div class="card bg-success text-white h-100">
-                                    <div class="card-body">
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <div class="me-3">
-                                                <div class="text-white-75 small">Delivered Orders</div>
-                                                <div class="text-lg fw-bold"><?php echo $deliveredorders; ?></div>
-                                            </div>
-                                   
-                                        </div>
-                                    </div>
-                                    <div class="card-footer d-flex align-items-center justify-content-between small">
-                                        <a class="text-white stretched-link" href="delivered-orders.php">View Details</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-xl-3 mb-4">
-                                <div class="card bg-black text-white h-100">
-                                    <div class="card-body">
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <div class="me-3">
-                                                <div class="text-white-75 small">Registered Users</div>
-                                                <div class="text-lg fw-bold"><?php echo $tregusers; ?></div>
-                                            </div>
-    
-                                        </div>
-                                    </div>
-                                    <div class="card-footer d-flex align-items-center justify-content-between small">
-                                        <a class="text-white stretched-link" href="registered-users.php">View Requests</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-------------->
-                             <div class="row">
-                               <div class="col-lg-6 col-xl-3 mb-4">
-                                <div class="card bg-danger text-white h-100">
-                                    <div class="card-body">
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <div class="me-3">
-                                                <div class="text-white-75 small">Cancelled Orders</div>
-                                                <div class="text-lg fw-bold"><?php echo $cancelledorders; ?></div>
-                                            </div>
-                                 
-                                        </div>
-                                    </div>
-                                    <div class="card-footer d-flex align-items-center justify-content-between small">
-                                        <a class="text-white stretched-link" href="cancelled-orders.php">View Details</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+    <style>
+        body { background: #f7f7f7; }
+        .card-box { padding:20px; border-radius:10px; box-shadow:0 2px 6px rgba(0,0,0,.2); }
+        .card-title { font-size:20px; font-weight:600; }
+        .value { font-size:30px; font-weight:bold; }
+    </style>
+</head>
+<body>
+<?php include('include/header.php');?>
 
+<div class="wrapper">
+<div class="container mt-5">
+<div class="row">
+<?php include('include/sidebar.php');?>
 
+<div class="span9">
+    <h2 class="mb-4">Admin Dashboard</h2>
 
-               
-                    </div>
-                </main>
-   <?php include_once('includes/footer.php');?>
+    <!-- Summary cards -->
+    <div class="row g-3">
+        <div class="col-md-3">
+            <div class="card-box bg-primary text-white">
+                <div class="card-title">Total Products</div>
+                <div class="value"><?= $totalProducts ?></div>
             </div>
         </div>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-        <script src="js/scripts.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-        <script src="assets/demo/chart-area-demo.js"></script>
-        <script src="assets/demo/chart-bar-demo.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
-        <script src="js/datatables-simple-demo.js"></script>
-    </body>
+
+        <div class="col-md-3">
+            <div class="card-box bg-success text-white">
+                <div class="card-title">Categories</div>
+                <div class="value"><?= $totalCategories ?></div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card-box bg-info text-white">
+                <div class="card-title">Subcategories</div>
+                <div class="value"><?= $totalSubCategories ?></div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card-box bg-warning text-dark">
+                <div class="card-title">Total Orders</div>
+                <div class="value"><?= $totalOrders ?></div>
+            </div>
+        </div>
+
+        <div class="col-md-3 mt-3">
+            <div class="card-box bg-danger text-white">
+                <div class="card-title">Reverted Orders</div>
+                <div class="value"><?= $totalReverted ?></div>
+            </div>
+        </div>
+
+        <div class="col-md-3 mt-3">
+            <div class="card-box bg-dark text-white">
+                <div class="card-title">Total Sold Qty</div>
+                <div class="value"><?= $soldQty ?></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Low Stock -->
+    <div class="mt-5">
+        <h4>Low Stock Products (≤ 2)</h4>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Product Name</th>
+                    <th>Available Qty</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php while ($row = mysqli_fetch_assoc($lowStockQuery)) { ?>
+                    <tr>
+                        <td><?= $row['productName'] ?></td>
+                        <td><?= $row['productQuantity'] ?></td>
+                    </tr>
+                <?php } ?>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Latest Orders -->
+    <div class="mt-5">
+        <h4>Latest Orders</h4>
+        <table class="table table-hover table-bordered">
+            <thead class="table-dark">
+                <tr>
+                    <th>Order ID</th>
+                    <th>Product</th>
+                    <th>Qty</th>
+                    <th>Price</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php while ($o = mysqli_fetch_assoc($latestOrders)) { ?>
+                    <tr>
+                        <td><?= $o['id'] ?></td>
+                        <td><?= $o['productName'] ?></td>
+                        <td><?= $o['quantity'] ?></td>
+                        <td>₹<?= $o['soldPrice'] ?></td>
+                        <td><?= $o['orderDate'] ?></td>
+                        <td>
+                            <?php if($o['orderReverted']) { ?>
+                                <span class="badge bg-danger">Reverted</span>
+                            <?php } else { ?>
+                                <span class="badge bg-success">Completed</span>
+                            <?php } ?>
+                        </td>
+                    </tr>
+                <?php } ?>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+</div>
+</div>
+</div>
+
+<?php include('include/footer.php');?>
+
+	<script src="scripts/jquery-1.9.1.min.js" type="text/javascript"></script>
+	<script src="scripts/jquery-ui-1.10.1.custom.min.js" type="text/javascript"></script>
+	<script src="bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+	<script src="scripts/flot/jquery.flot.js" type="text/javascript"></script>
+	<script src="scripts/datatables/jquery.dataTables.js"></script>
+	
+</body>
 </html>
-<?php } ?>
