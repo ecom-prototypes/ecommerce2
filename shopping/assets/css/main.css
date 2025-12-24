@@ -1240,7 +1240,6 @@ a {
 }
 .header-style-1 .header-nav .navbar-default .navbar-collapse .navbar-nav > li > a {
   background: none repeat scroll 0 0 rgba(0, 0, 0, 0);
-  color: #FFFFFF;
   font-family: 'FjallaOneRegular';
   font-size: 20px;
   line-height: 20px;
@@ -1250,6 +1249,9 @@ a {
   -moz-transition: all 0.2s linear 0s;
   -o-transition: all 0.2s linear 0s;
   transition: all 0.2s linear 0s;
+}
+.header-style-1 .header-nav .navbar-default .navbar-collapse .navbar-nav > li > a:hover {
+  color: #fff;
 }
 .header-style-1 .header-nav .navbar-default .navbar-collapse .navbar-nav > li .menu-label {
   position: absolute;
